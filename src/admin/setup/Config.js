@@ -1,8 +1,8 @@
 import React from 'react'
 import { useContext } from 'react/cjs/react.development'
 import { AppData } from '../../home/Home'
-import Login from '../../login/Login'
-import InitialSetup from '../initial_setup/InitialSetup'
+import AdminInitialLogin from './AdminInitialLogin'
+import InitialSetup from './InitialSetup'
 
 export default function Config() {
     const {signedIn} = useContext(AppData)
@@ -12,7 +12,7 @@ export default function Config() {
         <>
             {signedIn &&  <InitialSetup />}
 
-        {!signedIn && <Login />}
+            {!signedIn && <AdminInitialLogin />}
         </>
     )
 }

@@ -17,11 +17,13 @@ export default function Home() {
 
     //replace with -> read app data from local storage/cookies? (logged in or not)
     const [signedIn, setSignedIn] = useState(undefined)
-    const appDataValues = { signedIn, setSignedIn, BACKEND_URL }
+    const [token, setToken] = useState('')
+    const appDataValues = { signedIn, setSignedIn, BACKEND_URL, token, setToken }
     
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/public/server-status`)
         .then((response)=>{
+            console.log("HOME response", response)
             setConfigured(response.data.initialized)
         })
         .catch((error)=>{

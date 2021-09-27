@@ -5,7 +5,7 @@ import AdminArea from '../user_areas/AdminArea'
 import EmployeeArea from '../user_areas/EmployeeArea'
 import Config from '../admin/setup/Config'
 
-const BACKEND_URL = "localhost"
+const BACKEND_URL = "http://localhost:8080/api"
 
 //used in -> login/Login.js and user_areas/both files.
 //replace with mechanism to check if signed in.
@@ -16,13 +16,13 @@ export default function Home() {
     const [configured, setConfigured] = useState()
 
     //replace with -> read app data from local storage/cookies? (logged in or not)
-    const [signedIn, setSignedIn] = useState(false)
+    const [signedIn, setSignedIn] = useState(undefined)
     const appDataValues = { signedIn, setSignedIn, BACKEND_URL }
-
+    
     useEffect(()=>{
-        axios.get(BACKEND_URL)
+        axios.get(`${BACKEND_URL}/public/server-status`)
         .then((response)=>{
-            setConfigured(response.data)
+            setConfigured(response.data.initialized)
         })
         .catch((error)=>{
             console.log("Error connecting to backend -> ", error)
@@ -37,7 +37,7 @@ export default function Home() {
                 <Switch>
                     <Route exact path="/">
                         {configured && <ConfiguredHome />}
-                        {!configured && <UnconfiguredHome />}
+                        {!configured && <UnconfiguredHome status={configured}/>}
                     </Route>
                     <Route exact path='/admin'>
                         <AdminArea />
@@ -77,7 +77,7 @@ const ConfiguredHome = () => {
     )
 }
 
-const UnconfiguredHome = () =>{
+const UnconfiguredHome = ({status}) =>{
 
     const history = useHistory()
 
@@ -91,9 +91,17 @@ const UnconfiguredHome = () =>{
 
     return (
         <>
-            <div>Backend response {'->'} Error OR admin has not set up system</div>
-            <button onClick={handleAdminLogin}>Admin login - set up not done</button>
-            <button onClick={handleEmployeeLogin}>Employee Login - not set up / error</button>
+            {status === undefined && 
+                <div>Connecting to server..</div>
+            }
+
+            {status === false && 
+                <div>
+                <div>Admin has not configured system OR failed to connect to server</div>
+                <button onClick={handleAdminLogin}>Admin login - set up not done</button>
+                <button onClick={handleEmployeeLogin}>Employee Login - not set up / error</button>
+                </div>  
+            }
         </>
     )
 }

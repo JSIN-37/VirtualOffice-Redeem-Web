@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Config from '../admin/setup/Config'
 import { AppData } from '../home/Home'
 import Login from '../login/Login'

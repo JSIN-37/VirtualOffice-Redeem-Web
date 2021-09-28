@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
 import AdminArea from '../user_areas/AdminArea'
 import EmployeeArea from '../user_areas/EmployeeArea'
 import Config from '../admin/setup/Config'
 import Login from '../login/Login'
+import { Grid, Typography, Button } from '@mui/material';
+//import logo from "../img/logo.png"
 
 const BACKEND_URL = "http://localhost:8080/api"
 
@@ -23,73 +25,73 @@ export default function Home() {
     //get organization details if system is configured.
     const [organization, setOrganization] = useState(null)
 
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`${BACKEND_URL}/public/server-status`)
-        .then((response)=>{
-            console.log("HOME response", response)
-            if(response.data.initialized){
-                return axios.get(`${BACKEND_URL}/public/organization-info`)
-            }else{
-                setConfigured(false)
-            }
-        })
-        .then((response)=>{
-            console.log("response org deet", response.data)
-            setOrganization(response.data)
-            setConfigured(true)
-        })
-        .catch((error)=>{
-            console.log("Error connecting to backend -> ", error)
-        })
+            .then((response) => {
+                console.log("HOME response", response)
+                if (response.data.initialized) {
+                    return axios.get(`${BACKEND_URL}/public/organization-info`)
+                } else {
+                    setConfigured(false)
+                }
+            })
+            .then((response) => {
+                console.log("response org deet", response.data)
+                setOrganization(response.data)
+                setConfigured(true)
+            })
+            .catch((error) => {
+                console.log("Error connecting to backend -> ", error)
+            })
     }, [])
 
 
 
     return (
         <>
-        <AppData.Provider value={appDataValues}>
-            <Router>
-                <Switch>
-                    <Route exact path="/">
-                        {configured && <ConfiguredHome organization={organization} />}
-                        {!configured && <UnconfiguredHome status={configured}/>}
-                    </Route>
-                    <Route exact path='/admin'>
-                        <AdminArea />
-                    </Route>
-                    <Route exact path='/employee'>
-                        <EmployeeArea />
-                    </Route>
-                    <Route exact path='/admin/setup'>
-                        <Config/>
-                    </Route>
-                    <Route exact path='/admin/login'>
-                        <Login admin/>
-                    </Route>
-                    <Route exact path='/employee/login'>
-                        <Login employee />
-                    </Route>
-                </Switch>
-            </Router>
-        </AppData.Provider>    
+            <AppData.Provider value={appDataValues}>
+                <Router>
+                    <Switch>
+                        <Route exact path="/">
+                            {configured && <ConfiguredHome organization={organization} />}
+                            {!configured && <UnconfiguredHome status={configured} />}
+                        </Route>
+                        <Route exact path='/admin'>
+                            <AdminArea />
+                        </Route>
+                        <Route exact path='/employee'>
+                            <EmployeeArea />
+                        </Route>
+                        <Route exact path='/admin/setup'>
+                            <Config />
+                        </Route>
+                        <Route exact path='/admin/login'>
+                            <Login admin />
+                        </Route>
+                        <Route exact path='/employee/login'>
+                            <Login employee />
+                        </Route>
+                    </Switch>
+                </Router>
+            </AppData.Provider>
         </>
     )
 }
 
-const ConfiguredHome = ({organization}) => {
+const ConfiguredHome = ({ organization }) => {
 
     const history = useHistory()
 
-    function handleAdminLogin(){
+    function handleAdminLogin() {
         history.push('/admin')
     }
 
-    function handleEmployeeLogin(){
+    function handleEmployeeLogin() {
         history.push('/employee')
 
     }
 
-    return(
+    return (
         <>
             <div>Backend response {'-> '}admin has set up system</div>
             <h2>{organization && organization.organizationName}</h2>
@@ -102,30 +104,55 @@ const ConfiguredHome = ({organization}) => {
     )
 }
 
-const UnconfiguredHome = ({status}) =>{
+const UnconfiguredHome = ({ status }) => {
 
     const history = useHistory()
 
-    function handleEmployeeLogin(){
+    function handleEmployeeLogin() {
         alert("System not setup. Contact system administrator!")
     }
 
-    function handleAdminLogin(){
+    function handleAdminLogin() {
         history.push('/admin/setup')
     }
 
     return (
         <>
-            {status === undefined && 
+            {status === undefined &&
                 <div>Connecting to server..</div>
             }
 
-            {status === false && 
+            {status === false &&
                 <div>
-                <div>Admin has not configured system OR failed to connect to server</div>
-                <button onClick={handleAdminLogin}>Admin login - set up not done</button>
-                <button onClick={handleEmployeeLogin}>Employee Login - not set up / error</button>
-                </div>  
+                    <div style={{
+                        display: "flex",
+                        width: "100%",
+                        height: "90vh",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                    }}>
+                        <Grid
+                            container
+                            spacing={0}
+                            align="center"
+                            justify="center"
+                            direction="column">
+                            <Grid item>
+                                <Typography variant="h6" component="div" gutterBottom>
+                                    Admin has not configured system OR failed to connect to server
+                                </Typography>
+                                <Typography variant="body1" component="div" gutterBottom>
+                                    VirtualOffice
+                                </Typography>
+                                <div>Admin has not configured system OR failed to connect to server</div>
+                                <Button variant="contained" onClick={handleAdminLogin}>Admin login - set up not done</Button>
+                                <Button variant="contained" onClick={handleEmployeeLogin}>Employee Login - not set up / error</Button>
+                            </Grid>
+                        </Grid>
+                    </div>
+
+
+                </div>
             }
         </>
     )

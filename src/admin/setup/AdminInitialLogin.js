@@ -12,13 +12,18 @@ export default function AdminInitialLogin() {
     function signIn(){
         axios.post(`${BACKEND_URL}/admin/login`, {password : password, rememberMe:true})
         .then((res)=>{
+            console.log("login res",res)
             console.log("axios res",res)
             if(res.data.token !==''){
                 setToken(res.data.token)
                 setSignedIn(true)
             }
         })
-        .catch((err)=>{console.log("Error loggin in ", err)})
+        .catch((err)=>{
+            console.log("Error loggin in ", err.data)
+            alert('error logging in')
+        
+        })
     }
 
     return (

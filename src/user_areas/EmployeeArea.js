@@ -4,7 +4,7 @@ import { AppData } from '../home/Home'
 import Login from '../login/Login'
 
 export default function EmployeeArea() {
-
+    
     const {signedIn} = useContext(AppData)
 
     return (

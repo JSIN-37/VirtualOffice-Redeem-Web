@@ -1,30 +1,21 @@
-import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
-import { AppData } from '../../home/Home'
-import { useHistory } from 'react-router'
+import React, {  useState } from 'react'
+import AdminPasswordChange from './AdminPasswordChange'
 
 export default function InitialSetup() {
 
-    const {BACKEND_URL, token} = useContext(AppData)
-    const history = useHistory()
-
+    //inputs and logo
     const [orgName, setOrgName] = useState('')
     const [orgCountry, setOrgCountry] = useState('')
     const [orgContact, setOrgContact] = useState('')
     const [orgAddress, setOrgAddress] = useState('')
     const [logo, setLogo] = useState(null)
-    
-    //render loading screen if this is true.
-    const [dataSaved, setDataSaved] = useState(false)
-    const [logoSaved, setLogoSaved] = useState(false)
-    const [orgInfoSaved, setOrgInfoSaved] = useState(false)
 
-    //after server responds okay to updating details, go to admin area.
-    useEffect(()=>{
-        if(logoSaved && orgInfoSaved){
-            history.push('/admin')
-        }
-    },[logoSaved, orgInfoSaved])
+    //what to send to server. set on clicking next button.
+    const [logoData, setLogoData ] = useState(null)
+    const [orgData, setOrgData] = useState(null)
+    
+    // render change admin password if this is true
+    const [dataSaved, setDataSaved] = useState(false)
 
     function onFileSelect(event){
         let imageError = ''
@@ -55,7 +46,7 @@ export default function InitialSetup() {
         if(orgName ===''){
             infoError += 'Organization Name is empty. Please Enter Name.\n'
         }
-        if(orgCountry==''){
+        if(orgCountry===''){
             infoError+='No country provided. Please provide country name.\n'
         }
         if(orgContact===''){
@@ -71,7 +62,7 @@ export default function InitialSetup() {
         }
         
 
-        //organization data -> post to server
+        //organization data to send to server.
         const organizationData = {
             organizationName : orgName,
             organizationCountry: orgCountry,
@@ -79,33 +70,15 @@ export default function InitialSetup() {
             organizationAddress:orgAddress
         }
 
-        //logo -> post to server
+        //logo data to send to server.
         const imageData = new FormData()
         imageData.append('file', logo )
 
-        const config = { headers: { Authorization: `Bearer ${token}` } }
-
-        axios.put(`${BACKEND_URL}/admin/organization-logo`,imageData , config)
-        .then((res)=>{
-            console.log('response from server -> set logo', res)
-            if(res.status===200){
-                setLogoSaved(true)
-            }
-        })
-        .catch((err)=>{console.log(err)})
-
-        axios.put(`${BACKEND_URL}/admin/organization-info`, organizationData, config)
-        .then((res)=>{
-            console.log("response from server -> set org info", res)
-            if(res.status===200){
-                setOrgInfoSaved(true)
-            }
-        })
-        .catch((err)=>{console.log("Error updating organization details ", err)})
-
-        setDataSaved(undefined)
+        //store logo data and org data objects in state.
+        setLogoData(imageData)
+        setOrgData(organizationData)
+        setDataSaved(true) 
     }
-
 
     return (
         <>
@@ -120,16 +93,9 @@ export default function InitialSetup() {
             </div>
             )}
 
-            {dataSaved === undefined && <LoadingScreen />}
+            {dataSaved === true && <AdminPasswordChange logo={logoData} orgDeet={orgData}/>}
         </>
     )
 }
 
 
-const LoadingScreen = () => {
-    return(
-        <div>
-            <h1>loading screen.......</h1>
-        </div>
-    )
-}

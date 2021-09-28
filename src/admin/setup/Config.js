@@ -6,8 +6,6 @@ import InitialSetup from './InitialSetup'
 
 export default function Config() {
     const {signedIn} = useContext(AppData)
-    console.log("CONFIG JS ", signedIn)
-
     return (
         <>
             {signedIn &&  <InitialSetup />}

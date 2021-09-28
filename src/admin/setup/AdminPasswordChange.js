@@ -2,6 +2,7 @@ import React, { useContext,useEffect,useState } from 'react'
 import axios from 'axios'
 import { AppData } from '../../home/Home'
 import { useHistory } from 'react-router'
+import LoadingScreen from '../other/LoadingScreen'
 
 
 export default function AdminPasswordChange({logo, orgDeet}) {
@@ -21,6 +22,8 @@ export default function AdminPasswordChange({logo, orgDeet}) {
     const [detailsUpdated, setDetailsUpdated] = useState(false)
     const [logoUpdated, setLogoUpdated] = useState(false)
 
+    //render loading screen if this is true, while waiting for server response.
+    const [loading, setLoading] = useState(false)
 
     useEffect(()=>{
         if(detailsUpdated && logoUpdated){
@@ -76,6 +79,7 @@ export default function AdminPasswordChange({logo, orgDeet}) {
             return
         }
 
+        setLoading(true)
         const data = {adminEmail:email, adminPassword:password}
         const config = { headers: { Authorization: `Bearer ${token}` } }
 
@@ -96,11 +100,17 @@ export default function AdminPasswordChange({logo, orgDeet}) {
     }
 
     return (
-        <div>
+        <>
+        {!loading && (
+            <div>
             <input type='email' placeholder='email' value={email} onChange={(e)=>{setEmail(e.target.value)}}></input>
             <input type='password' placeholder='password' value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
             <input type='password' placeholder='confirm password' value={password2} onChange={(e)=>{setPassword2(e.target.value)}}></input>
             <button onClick={submit}>Submit</button>
         </div>
+        )}
+
+        {loading && <LoadingScreen />}
+        </>
     )
 }

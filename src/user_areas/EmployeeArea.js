@@ -1,11 +1,13 @@
 import React from 'react'
 import { useContext } from 'react/cjs/react.development'
 import { AppData } from '../home/Home'
-import Login from '../login/Login'
+import { useHistory } from 'react-router-dom'
+
 
 export default function EmployeeArea() {
     
-    const {signedIn} = useContext(AppData)
+    const {signedIn} = useContext(AppData) //replace with sign in function
+    const history = useHistory()
 
     return (
         <>
@@ -14,7 +16,7 @@ export default function EmployeeArea() {
                     <h1>Employee Area</h1>
                 </div>
             )}
-            {!signedIn && <Login/>}
+            {!signedIn && history.push('/employee/login')}
         </>
     )
 }

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router
 import AdminArea from '../user_areas/AdminArea'
 import EmployeeArea from '../user_areas/EmployeeArea'
 import Config from '../admin/setup/Config'
+import Login from '../login/Login'
 
 const BACKEND_URL = "http://localhost:8080/api"
 
@@ -61,6 +62,12 @@ export default function Home() {
                     </Route>
                     <Route exact path='/admin/setup'>
                         <Config/>
+                    </Route>
+                    <Route exact path='/admin/login'>
+                        <Login admin/>
+                    </Route>
+                    <Route exact path='/employee/login'>
+                        <Login employee />
                     </Route>
                 </Switch>
             </Router>

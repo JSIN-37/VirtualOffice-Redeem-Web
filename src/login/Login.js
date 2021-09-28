@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppData } from '../home/Home'
 
-export default function Login() {
+export default function Login(props) {
+    const {BACKEND_URL} = useContext(AppData)
+    let loginURL = ''
+    if(props.employee){
+        loginURL = `${BACKEND_URL}/employee/login` // set this right
+    }
+    if(props.admin){
+        loginURL =`${BACKEND_URL}/admin/login`
+    }
+
+    
+    
     return (
         <div>
             Log in Page

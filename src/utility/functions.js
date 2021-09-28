@@ -9,6 +9,7 @@ export function getUserFromStorage(storage_key){
     }
 }
 
+//different token check url depending on role.
 export function checkSignedIn(storage_key){
     const user = getUserFromStorage(storage_key)
     if(user.token){

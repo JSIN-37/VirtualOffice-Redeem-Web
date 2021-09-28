@@ -1,12 +1,13 @@
 import React, {useContext} from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
 import Config from '../admin/setup/Config'
 import { AppData } from '../home/Home'
-import Login from '../login/Login'
+
 
 export default function AdminArea() {
 
-    const {signedIn} = useContext(AppData)
+    const {signedIn} = useContext(AppData) //replace with sign in function
+    const history = useHistory()
 
     return (
         <>
@@ -20,7 +21,7 @@ export default function AdminArea() {
                 </Switch>
             </Router>
         </>}
-        {!signedIn && <Login/>}
+        {!signedIn && history.push('/admin/login')}
         </>
     )
 }

@@ -7,13 +7,11 @@ import Config from '../admin/setup/Config'
 
 const BACKEND_URL = "http://localhost:8080/api"
 
-//used in -> login/Login.js and user_areas/both files.
 //replace with mechanism to check if signed in.
 export const AppData = React.createContext()
 
 export default function Home() {
     //has the admin  configured the system?
-    console.log("render gome")
     const [configured, setConfigured] = useState()
 
     //replace with -> read app data from local storage/cookies? (logged in or not)
@@ -28,26 +26,22 @@ export default function Home() {
         axios.get(`${BACKEND_URL}/public/server-status`)
         .then((response)=>{
             console.log("HOME response", response)
-            setConfigured(response.data.initialized)
+            if(response.data.initialized){
+                return axios.get(`${BACKEND_URL}/public/organization-info`)
+            }else{
+                setConfigured(false)
+            }
+        })
+        .then((response)=>{
+            console.log("response org deet", response.data)
+            setOrganization(response.data)
+            setConfigured(true)
         })
         .catch((error)=>{
             console.log("Error connecting to backend -> ", error)
-            setConfigured(false)
         })
     }, [])
 
-    useEffect(()=>{
-        if(configured){
-            axios.get(`${BACKEND_URL}/public/organization-info`)
-            .then((response)=>{
-                console.log("response org deet", response.data)
-                setOrganization(response.data)
-            })
-            .catch((er)=>{
-                console.log("error getting org details ",er)
-            })
-        }
-    }, [configured])
 
 
     return (

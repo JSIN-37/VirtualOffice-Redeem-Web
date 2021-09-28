@@ -1,7 +1,7 @@
 import React from 'react'
 import { useContext } from 'react/cjs/react.development'
 import { AppData } from '../home/Home'
-import AdminInitialLogin from '../admin/setup/AdminInitialLogin'
+import Login from '../login/Login'
 
 export default function EmployeeArea() {
 
@@ -14,7 +14,7 @@ export default function EmployeeArea() {
                     <h1>Employee Area</h1>
                 </div>
             )}
-            {!signedIn && <AdminInitialLogin/>}
+            {!signedIn && <Login/>}
         </>
     )
 }

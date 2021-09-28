@@ -13,13 +13,17 @@ export const AppData = React.createContext()
 
 export default function Home() {
     //has the admin  configured the system?
+    console.log("render gome")
     const [configured, setConfigured] = useState()
 
     //replace with -> read app data from local storage/cookies? (logged in or not)
     const [signedIn, setSignedIn] = useState(undefined)
     const [token, setToken] = useState('')
     const appDataValues = { signedIn, setSignedIn, BACKEND_URL, token, setToken }
-    
+
+    //get organization details if system is configured.
+    const [organization, setOrganization] = useState(null)
+
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/public/server-status`)
         .then((response)=>{
@@ -32,13 +36,27 @@ export default function Home() {
         })
     }, [])
 
+    useEffect(()=>{
+        if(configured){
+            axios.get(`${BACKEND_URL}/public/organization-info`)
+            .then((response)=>{
+                console.log("response org deet", response.data)
+                setOrganization(response.data)
+            })
+            .catch((er)=>{
+                console.log("error getting org details ",er)
+            })
+        }
+    }, [configured])
+
+
     return (
         <>
         <AppData.Provider value={appDataValues}>
             <Router>
                 <Switch>
                     <Route exact path="/">
-                        {configured && <ConfiguredHome />}
+                        {configured && <ConfiguredHome organization={organization} />}
                         {!configured && <UnconfiguredHome status={configured}/>}
                     </Route>
                     <Route exact path='/admin'>
@@ -57,7 +75,7 @@ export default function Home() {
     )
 }
 
-const ConfiguredHome = () => {
+const ConfiguredHome = ({organization}) => {
 
     const history = useHistory()
 
@@ -73,6 +91,10 @@ const ConfiguredHome = () => {
     return(
         <>
             <div>Backend response {'-> '}admin has set up system</div>
+            <h2>{organization && organization.organizationName}</h2>
+            <h2>{organization && organization.organizationAddress}</h2>
+            <h2>{organization && organization.organizationCountry}</h2>
+            <h2>{organization && organization.organizationContactNumber}</h2>
             <button onClick={handleAdminLogin}>Admin Login - setup done</button>
             <button onClick={handleEmployeeLogin}>Employee login</button>
         </>
@@ -84,7 +106,7 @@ const UnconfiguredHome = ({status}) =>{
     const history = useHistory()
 
     function handleEmployeeLogin(){
-        alert("System not setup or server not responsive. Contact system administrator!")
+        alert("System not setup. Contact system administrator!")
     }
 
     function handleAdminLogin(){

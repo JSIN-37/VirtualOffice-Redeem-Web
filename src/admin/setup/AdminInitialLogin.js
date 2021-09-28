@@ -28,7 +28,7 @@ export default function AdminInitialLogin() {
 
     return (
         <div>
-            <h1>Login Area</h1>
+            <h1>Admin Initial Login Area</h1>
             <input type='text' placeholder='password' value={password} onChange={(e)=>setPassword(e.target.value)}></input>
             <button onClick={signIn}>Log in </button>
         </div>

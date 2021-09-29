@@ -9,6 +9,10 @@ export function getUserFromStorage(storage_key){
     }
 }
 
+export function removeUserFromStorage(storage_key){
+    localStorage.removeItem(storage_key)
+}
+
 export function getTokenFromStorage(storage_key){
     console.log("calleed get  token with key ", storage_key)
     const user = getUserFromStorage(storage_key)
@@ -59,3 +63,9 @@ export function isAuthenticated(url, storage_key){
     }
 
 } 
+
+
+export function logOut(storage_key,destinationURL, urlSetFunction){
+    localStorage.removeItem(storage_key)
+    urlSetFunction(destinationURL)
+}

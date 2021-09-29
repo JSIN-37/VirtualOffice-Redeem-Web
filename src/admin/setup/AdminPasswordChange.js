@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useHistory } from 'react-router'
 import LoadingScreen from '../other/LoadingScreen'
 import { BACKEND_URL, USER_STORAGE_KEY } from '../../app_data/constants'
-import { getTokenFromStorage } from '../../utility/functions'
+import { getTokenFromStorage, removeUserFromStorage } from '../../utility/functions'
 
 export default function AdminPasswordChange({logo, orgDeet}) {
 
@@ -54,6 +54,7 @@ export default function AdminPasswordChange({logo, orgDeet}) {
             if(response.status===200){
                 alert('password updated. please log in again.')
                 history.push('/')
+                removeUserFromStorage(USER_STORAGE_KEY)
                 window.location.reload()
             }
         })

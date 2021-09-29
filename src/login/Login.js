@@ -2,12 +2,20 @@ import axios from 'axios'
 import React, {  useState } from 'react'
 import { useHistory } from 'react-router'
 import { BACKEND_URL, USER_STORAGE_KEY } from '../app_data/constants'
-import { setUserToStorage } from '../utility/functions'
+import { getTokenFromStorage, setUserToStorage } from '../utility/functions'
 import { admin_login_url } from '../app_data/admin_urls'
 
 export default function Login(props) {
     const history = useHistory()
-    //const employeeURL =`${BACKEND_URL}/employee/login`
+
+    if(getTokenFromStorage(USER_STORAGE_KEY) !== ''){
+        if(props.admin){
+            history.push('/admin')
+        }
+        if(props.employee){
+            history.push('/employee')
+        }
+    }
 
     const [password, setPassword] = useState('')
 

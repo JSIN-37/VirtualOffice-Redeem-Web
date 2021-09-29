@@ -13,6 +13,7 @@ import { admin_validate_url } from '../app_data/admin_urls'
 import { server_status_url } from '../app_data/public_urls'
 import { org_info_url } from '../app_data/public_urls'
 
+
 //import logo from "../img/logo.png"
 
 //const employeeURL =`${BACKEND_URL}/employee/login`
@@ -61,7 +62,7 @@ export default function Home() {
                             {!configured && <UnconfiguredHome status={configured} />}
                         </Route>
                         <Route exact path='/admin'>
-                            {isAuthenticated(admin_validate_url,USER_STORAGE_KEY)? <AdminArea />: <Redirect push to='/admin/login'/> }
+                            {isAuthenticated(admin_validate_url,USER_STORAGE_KEY)? <AdminArea auth={true}/>: <Redirect push to='/admin/login'/> }
                         </Route>
                         <Route exact path='/employee'>
                             <EmployeeArea />

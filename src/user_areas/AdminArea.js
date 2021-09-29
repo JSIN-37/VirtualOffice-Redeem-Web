@@ -1,22 +1,23 @@
 import React from 'react'
-import { useHistory } from 'react-router'
-import { USER_STORAGE_KEY } from '../app_data/constants'
-import { removeUserFromStorage } from '../utility/functions'
+import { Route, Router, Switch, useHistory, useRouteMatch } from 'react-router'
+import Dashboard from '../admin/Dashboard'
+import ViewDivisions from '../admin/divisions/ViewDivisions'
 
-export default function AdminArea() {
-    const history = useHistory()
 
-    function handleLogOut(){
-        removeUserFromStorage(USER_STORAGE_KEY)
-        history.push('/')
+export default function AdminArea({auth}) {
+
+    if(auth){
+        return (
+            <>
+            <Switch>
+                <Route exact path='/admin'>
+                    <Dashboard />
+                </Route>
+                <Route  path='/admin/view-divisions'>
+                    <ViewDivisions />
+                </Route>
+            </Switch>
+            </>
+        )
     }
-
-
-    return (
-       <div>
-           <h1>Admin Area</h1>
-           <button onClick={handleLogOut}>logout</button>
-       </div>
-
-    )
 }

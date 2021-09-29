@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { useContext } from 'react/cjs/react.development'
-import { AppData } from '../../home/Home'
 import axios from 'axios'
 import { Container, Typography, Card, CardMedia, CardActions, TextField, InputAdornment, IconButton, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -40,7 +38,6 @@ const useStyles = makeStyles({
 
 export default function AdminInitialLogin({setSignedIn}) {
     const classes = useStyles();
-    const { BACKEND_URL } = useContext(AppData)
 
     const [password, setPassword] = useState('')
 

@@ -14,7 +14,7 @@ export default function Dashboard() {
     }
 
     function handleViewDivisions(){
-        history.push('/admin/view-divisions')
+        history.push('/admin/divisions')
     }
 
 

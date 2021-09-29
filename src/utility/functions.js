@@ -14,11 +14,8 @@ export function removeUserFromStorage(storage_key){
 }
 
 export function getTokenFromStorage(storage_key){
-    console.log("calleed get  token with key ", storage_key)
     const user = getUserFromStorage(storage_key)
-    console.log("user = ", user)
     if(user.token){
-        console.log("returning token -> ",user.token)
         return user.token
     }else{
         return ''
@@ -53,10 +50,8 @@ export async function checkToken(storage_key, url){
 
 
 export function isAuthenticated(url, storage_key){
-    console.log("called auth.")
     const token = getTokenFromStorage(storage_key)
     if(token===''){
-        console.log("auth return false ")
         return false
     }else{
        return axios.get(url, {headers: {Authorization : `Bearer ${token}`}})

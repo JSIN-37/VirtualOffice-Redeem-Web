@@ -1,8 +1,8 @@
-import React, { useContext,useState } from 'react'
+import React, {useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router'
 import LoadingScreen from '../other/LoadingScreen'
-import { BACKEND_URL, USER_STORAGE_KEY } from '../../app_data/constants'
+import { USER_STORAGE_KEY } from '../../app_data/constants'
 import { getTokenFromStorage, removeUserFromStorage } from '../../utility/functions'
 import { update_org_url, update_logo_url, admin_pass_update_url } from '../../app_data/admin_urls'
 export default function AdminPasswordChange({logo, orgDeet}) {

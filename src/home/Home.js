@@ -24,7 +24,6 @@ export default function Home() {
     // const [signedIn, setSignedIn] = useState(undefined)
     // const [token, setToken] = useState('')
     const appDataValues = { BACKEND_URL }
-    const [suc, setSuc] = useState(false)
 
     //get organization details if system is configured.
     const [organization, setOrganization] = useState(null)

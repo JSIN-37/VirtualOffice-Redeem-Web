@@ -1,13 +1,12 @@
 import React, { useContext,useState } from 'react'
 import axios from 'axios'
-import { AppData } from '../../home/Home'
 import { useHistory } from 'react-router'
 import LoadingScreen from '../other/LoadingScreen'
-
+import { BACKEND_URL, USER_STORAGE_KEY } from '../../app_data/constants'
+import { getTokenFromStorage } from '../../utility/functions'
 
 export default function AdminPasswordChange({logo, orgDeet}) {
 
-    const {token, BACKEND_URL, setSignedIn} = useContext(AppData)
     const history = useHistory()
 
     //inputs and 
@@ -32,9 +31,10 @@ export default function AdminPasswordChange({logo, orgDeet}) {
 
         //post to server
         //first update details, then logo, then update password.
-        const config = { headers: { Authorization: `Bearer ${token}` } }
+        const tokenx = getTokenFromStorage(USER_STORAGE_KEY)
+        const config = { headers: { Authorization: `Bearer ${tokenx}` } }
         const data = {adminEmail:email, adminPassword:password}
-
+        
         //update org details
         axios.put(`${BACKEND_URL}/admin/organization-info`, orgDeet, config)
         .then((response)=>{
@@ -53,8 +53,8 @@ export default function AdminPasswordChange({logo, orgDeet}) {
             console.log("updated password. ",response)
             if(response.status===200){
                 alert('password updated. please log in again.')
-                setSignedIn(false) //replace with log in function?
                 history.push('/')
+                window.location.reload()
             }
         })
         .catch((er)=>{

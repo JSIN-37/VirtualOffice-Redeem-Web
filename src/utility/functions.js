@@ -10,8 +10,11 @@ export function getUserFromStorage(storage_key){
 }
 
 export function getTokenFromStorage(storage_key){
+    console.log("calleed get  token with key ", storage_key)
     const user = getUserFromStorage(storage_key)
+    console.log("user = ", user)
     if(user.token){
+        console.log("returning token -> ",user.token)
         return user.token
     }else{
         return ''

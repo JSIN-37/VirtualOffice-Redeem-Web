@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React, {  useState } from 'react'
-import { Redirect, Route, useHistory } from 'react-router'
+import { useHistory } from 'react-router'
 import { BACKEND_URL, USER_STORAGE_KEY } from '../app_data/constants'
-import Home from '../home/Home'
 import { setUserToStorage } from '../utility/functions'
 
 

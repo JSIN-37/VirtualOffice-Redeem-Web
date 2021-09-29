@@ -9,20 +9,12 @@ export function getUserFromStorage(storage_key){
     }
 }
 
-//different token check url depending on role.
-export function checkSignedIn(storage_key){
-    const user = getUserFromStorage(storage_key)
-    if(user.token){
-        //check if token is valid and return true.
-        return true
-    }else{
-        return false
-    }
+export function removeUserFromStorage(storage_key){
+    localStorage.removeItem(storage_key)
 }
 
 export function getTokenFromStorage(storage_key){
     const user = getUserFromStorage(storage_key)
-
     if(user.token){
         return user.token
     }else{
@@ -30,10 +22,45 @@ export function getTokenFromStorage(storage_key){
     }
 }
 
+export function setUserToStorage(storage_key, token){
+    localStorage.setItem(storage_key, JSON.stringify(token))
+}
 
-export function signIn(username, password, url){
-    axios.post(url)
-    .then((res)=>{
-        //if response succesfull, create a user object.
-    })
+
+export async function checkToken(storage_key, url){
+    const token = getTokenFromStorage(storage_key)
+    if(token === ''){
+        return false
+    }else{
+        const config = {headers : {Authorization : `Bearer ${token}`}}
+        return new Promise(function (resolve, reject){
+            axios.get(url, config)
+            .then((response)=>{
+                if(response.status === 200){
+                    resolve(true)
+                }
+            })
+            .catch((er)=>{
+                console.log('error checking validity of token',er)
+                reject(false)
+            })
+        })
+    }
+}
+
+
+export function isAuthenticated(url, storage_key){
+    const token = getTokenFromStorage(storage_key)
+    if(token===''){
+        return false
+    }else{
+       return axios.get(url, {headers: {Authorization : `Bearer ${token}`}})
+    }
+
+} 
+
+
+export function logOut(storage_key,destinationURL, urlSetFunction){
+    localStorage.removeItem(storage_key)
+    urlSetFunction(destinationURL)
 }

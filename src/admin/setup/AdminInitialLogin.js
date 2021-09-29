@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { useContext } from 'react/cjs/react.development'
-import { AppData } from '../../home/Home'
 import axios from 'axios'
 import { Container, Typography, Card, CardMedia, CardActions, TextField, InputAdornment, IconButton, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import logo from "../../img/logo.png"
 import { makeStyles } from '@mui/styles';
+import { setUserToStorage } from '../../utility/functions';
+import { USER_STORAGE_KEY } from '../../app_data/constants';
+import { admin_login_url } from '../../app_data/admin_urls';
 
 const useStyles = makeStyles({
     root: {
@@ -35,20 +36,18 @@ const useStyles = makeStyles({
 });
 
 
-export default function AdminInitialLogin() {
+export default function AdminInitialLogin({setSignedIn}) {
     const classes = useStyles();
-    const { setSignedIn, BACKEND_URL, setToken } = useContext(AppData)
 
     const [password, setPassword] = useState('')
 
 
     function signIn() {
-        axios.post(`${BACKEND_URL}/admin/login`, { password: password, rememberMe: true })
+        axios.post(admin_login_url, { password: password, rememberMe: true })
             .then((res) => {
-                console.log("login res", res)
-                console.log("axios res", res)
                 if (res.data.token !== '') {
-                    setToken(res.data.token)
+                    const user = { token : res.data.token}
+                    setUserToStorage(USER_STORAGE_KEY, user)
                     setSignedIn(true)
                 }
             })
@@ -57,6 +56,7 @@ export default function AdminInitialLogin() {
                 alert('error logging in')
 
             })
+
     }
 
     const [showPassword, setShowPassword] = useState(false);

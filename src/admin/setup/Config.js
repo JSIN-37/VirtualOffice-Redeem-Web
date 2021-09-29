@@ -1,16 +1,19 @@
-import React from 'react'
-import { useContext } from 'react/cjs/react.development'
-import { AppData } from '../../home/Home'
+import React , {useState} from 'react'
+import { USER_STORAGE_KEY } from '../../app_data/constants'
+import { isAuthenticated } from '../../utility/functions'
 import AdminInitialLogin from './AdminInitialLogin'
 import InitialSetup from './InitialSetup'
+import { admin_validate_url } from '../../app_data/admin_urls'
+
 
 export default function Config() {
-    const {signedIn} = useContext(AppData)
+    const [signedIn, setSignedIn] = useState(isAuthenticated(admin_validate_url, USER_STORAGE_KEY))
+    console.log("config signed in val -> ",signedIn)
     return (
         <>
             {signedIn &&  <InitialSetup />}
 
-            {!signedIn && <AdminInitialLogin />}
+            {!signedIn && <AdminInitialLogin setSignedIn={setSignedIn}/>}
         </>
     )
 }

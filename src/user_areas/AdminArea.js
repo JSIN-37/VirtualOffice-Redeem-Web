@@ -1,27 +1,19 @@
-import React, {useContext} from 'react'
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
-import Config from '../admin/setup/Config'
-import { AppData } from '../home/Home'
+import React from "react";
+import { Route} from "react-router";
+import Dashboard from "../admin/Dashboard";
+import ViewDivisions from "../admin/divisions/ViewDivisions";
 
-
-export default function AdminArea() {
-
-    const {signedIn} = useContext(AppData) //replace with sign in function
-    const history = useHistory()
-
+export default function AdminArea({ auth }) {
+  if (auth) {
     return (
-        <>
-        {signedIn && <>
-            <h1>Admin Area</h1>
-            <Router>
-                <Switch>
-                    <Route exact path="/admin/setup">
-                        <Config />
-                    </Route>
-                </Switch>
-            </Router>
-        </>}
-        {!signedIn && history.push('/admin/login')}
-        </>
-    )
+      <>
+        <Route exact path="/admin">
+          <Dashboard />
+        </Route>
+        <Route exact path="/admin/divisions">
+          <ViewDivisions />
+        </Route>
+      </>
+    );
+  }
 }

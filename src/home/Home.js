@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, useHistory, Redirect } from 'react-router-dom'
 import AdminArea from '../user_areas/AdminArea'
 import EmployeeArea from '../user_areas/EmployeeArea'
 import Config from '../admin/setup/Config'
 import Login from '../login/Login'
 import { Grid, Typography, Button } from '@mui/material';
+import { USER_STORAGE_KEY } from '../app_data/constants'
+import { isAuthenticated } from '../utility/functions'
 //import logo from "../img/logo.png"
 
 const BACKEND_URL = "http://localhost:8080/api"
-
+const adminURL = `${BACKEND_URL}/admin/validate-token` 
+//const employeeURL =`${BACKEND_URL}/employee/login`
 //replace with mechanism to check if signed in.
 export const AppData = React.createContext()
 
@@ -18,9 +21,10 @@ export default function Home() {
     const [configured, setConfigured] = useState()
 
     //replace with -> read app data from local storage/cookies? (logged in or not)
-    const [signedIn, setSignedIn] = useState(undefined)
-    const [token, setToken] = useState('')
-    const appDataValues = { signedIn, setSignedIn, BACKEND_URL, token, setToken }
+    // const [signedIn, setSignedIn] = useState(undefined)
+    // const [token, setToken] = useState('')
+    const appDataValues = { BACKEND_URL }
+    const [suc, setSuc] = useState(false)
 
     //get organization details if system is configured.
     const [organization, setOrganization] = useState(null)
@@ -29,7 +33,7 @@ export default function Home() {
         axios.get(`${BACKEND_URL}/public/server-status`)
             .then((response) => {
                 console.log("HOME response", response)
-                if (response.data.initialized) {
+                if (response.data.serverInitialized) {
                     return axios.get(`${BACKEND_URL}/public/organization-info`)
                 } else {
                     setConfigured(false)
@@ -57,7 +61,7 @@ export default function Home() {
                             {!configured && <UnconfiguredHome status={configured} />}
                         </Route>
                         <Route exact path='/admin'>
-                            <AdminArea />
+                            {isAuthenticated(adminURL,USER_STORAGE_KEY)? <AdminArea />: <Redirect push to='/admin/login'/> }
                         </Route>
                         <Route exact path='/employee'>
                             <EmployeeArea />

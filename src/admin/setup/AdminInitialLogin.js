@@ -9,6 +9,7 @@ import logo from "../../img/logo.png"
 import { makeStyles } from '@mui/styles';
 import { setUserToStorage } from '../../utility/functions';
 import { USER_STORAGE_KEY } from '../../app_data/constants';
+import { admin_login_url } from '../../app_data/admin_urls';
 
 const useStyles = makeStyles({
     root: {
@@ -45,10 +46,8 @@ export default function AdminInitialLogin({setSignedIn}) {
 
 
     function signIn() {
-        axios.post(`${BACKEND_URL}/admin/login`, { password: password, rememberMe: true })
+        axios.post(admin_login_url, { password: password, rememberMe: true })
             .then((res) => {
-                console.log("login res", res)
-                console.log("axios res", res)
                 if (res.data.token !== '') {
                     const user = { token : res.data.token}
                     setUserToStorage(USER_STORAGE_KEY, user)

@@ -6,12 +6,15 @@ import EmployeeArea from '../user_areas/EmployeeArea'
 import Config from '../admin/setup/Config'
 import Login from '../login/Login'
 import { Grid, Typography, Button } from '@mui/material';
+import { BACKEND_URL } from '../app_data/constants'
 import { USER_STORAGE_KEY } from '../app_data/constants'
 import { isAuthenticated } from '../utility/functions'
+import { admin_validate_url } from '../app_data/admin_urls'
+import { server_status_url } from '../app_data/public_urls'
+import { org_info_url } from '../app_data/public_urls'
+
 //import logo from "../img/logo.png"
 
-const BACKEND_URL = "http://localhost:8080/api"
-const adminURL = `${BACKEND_URL}/admin/validate-token` 
 //const employeeURL =`${BACKEND_URL}/employee/login`
 //replace with mechanism to check if signed in.
 export const AppData = React.createContext()
@@ -29,22 +32,20 @@ export default function Home() {
     const [organization, setOrganization] = useState(null)
 
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/public/server-status`)
+        axios.get(server_status_url)
             .then((response) => {
-                console.log("HOME response", response)
                 if (response.data.serverInitialized) {
-                    return axios.get(`${BACKEND_URL}/public/organization-info`)
+                    return axios.get(org_info_url)
                 } else {
                     setConfigured(false)
                 }
             })
             .then((response) => {
-                console.log("response org deet", response.data)
                 setOrganization(response.data)
                 setConfigured(true)
             })
             .catch((error) => {
-                console.log("Error connecting to backend -> ", error)
+                console.log("Error at home page -> ", error)
             })
     }, [])
 
@@ -60,7 +61,7 @@ export default function Home() {
                             {!configured && <UnconfiguredHome status={configured} />}
                         </Route>
                         <Route exact path='/admin'>
-                            {isAuthenticated(adminURL,USER_STORAGE_KEY)? <AdminArea />: <Redirect push to='/admin/login'/> }
+                            {isAuthenticated(admin_validate_url,USER_STORAGE_KEY)? <AdminArea />: <Redirect push to='/admin/login'/> }
                         </Route>
                         <Route exact path='/employee'>
                             <EmployeeArea />

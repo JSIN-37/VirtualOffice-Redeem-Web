@@ -4,11 +4,11 @@ import { isAuthenticated } from '../../utility/functions'
 import AdminInitialLogin from './AdminInitialLogin'
 import InitialSetup from './InitialSetup'
 import { BACKEND_URL } from '../../app_data/constants'
-const adminURL = `${BACKEND_URL}/admin/validate-token` 
+import { admin_validate_url } from '../../app_data/admin_urls'
 
 
 export default function Config() {
-    const [signedIn, setSignedIn] = useState(isAuthenticated(adminURL, USER_STORAGE_KEY))
+    const [signedIn, setSignedIn] = useState(isAuthenticated(admin_validate_url, USER_STORAGE_KEY))
     console.log("config signed in val -> ",signedIn)
     return (
         <>

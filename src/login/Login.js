@@ -3,11 +3,10 @@ import React, {  useState } from 'react'
 import { useHistory } from 'react-router'
 import { BACKEND_URL, USER_STORAGE_KEY } from '../app_data/constants'
 import { setUserToStorage } from '../utility/functions'
-
+import { admin_login_url } from '../app_data/admin_urls'
 
 export default function Login(props) {
     const history = useHistory()
-    const adminURL = `${BACKEND_URL}/admin/login` 
     //const employeeURL =`${BACKEND_URL}/employee/login`
 
     const [password, setPassword] = useState('')
@@ -30,7 +29,7 @@ export default function Login(props) {
     async function adminLogin(){
         const credentials = {password : password, rememberMe:true}
         try{ 
-            const res = await logIn(adminURL, credentials)
+            const res = await logIn(admin_login_url, credentials)
             console.log("login page, res ",res)
             const user = {token : res}
             setUserToStorage(USER_STORAGE_KEY, user)
@@ -40,7 +39,7 @@ export default function Login(props) {
             console.log("error logging in")
         }
 
-        console.log("historu ",history.location)
+        console.log("history ",history.location)
     }
 
     function handleLogInButton(){

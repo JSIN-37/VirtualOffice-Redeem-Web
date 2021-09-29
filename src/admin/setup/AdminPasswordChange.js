@@ -4,7 +4,7 @@ import { useHistory } from 'react-router'
 import LoadingScreen from '../other/LoadingScreen'
 import { BACKEND_URL, USER_STORAGE_KEY } from '../../app_data/constants'
 import { getTokenFromStorage, removeUserFromStorage } from '../../utility/functions'
-
+import { update_org_url, update_logo_url, admin_pass_update_url } from '../../app_data/admin_urls'
 export default function AdminPasswordChange({logo, orgDeet}) {
 
     const history = useHistory()
@@ -36,18 +36,18 @@ export default function AdminPasswordChange({logo, orgDeet}) {
         const data = {adminEmail:email, adminPassword:password}
         
         //update org details
-        axios.put(`${BACKEND_URL}/admin/organization-info`, orgDeet, config)
+        axios.put(update_org_url, orgDeet, config)
         .then((response)=>{
             console.log("details updates in server -> ", response)
             if(response.status === 200){
             }
-            return axios.put(`${BACKEND_URL}/admin/organization-logo`, logo, config)
+            return axios.put(update_logo_url, logo, config)
         })
         .then((response)=>{
             console.log("success updating logo. ", response)
             if(response.status===200){
             }
-            return axios.put(`${BACKEND_URL}/admin/credentials`,data, config)
+            return axios.put(admin_pass_update_url,data, config)
         })
         .then((response)=>{
             console.log("updated password. ",response)

@@ -49,12 +49,26 @@ export function setUserToStorage(storage_key, token){
 // }
 
 
-export function isAuthenticated(url, storage_key){
-    const token = getTokenFromStorage(storage_key)
-    if(token===''){
+export function isAuthenticated(url,storage_key){
+    const config = getConfig(storage_key)
+    if(!config){
         return false
     }else{
-       return axios.get(url, {headers: {Authorization : `Bearer ${token}`}})
+       return new Promise(function (resolve, reject){
+           axios.get(url, config)
+           .then((res)=>{
+               console.log("axios response - isAuthenticated ",res)
+               if(res.status===200){
+                   resolve(true)
+               }else{
+                   resolve(false)
+               }
+           })
+           .catch((er)=>{
+               console.log("axios error - isAuthenticated",er)
+               reject(false)
+           })
+       })
     }
 
 } 

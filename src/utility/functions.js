@@ -64,3 +64,13 @@ export function logOut(storage_key,destinationURL, urlSetFunction){
     localStorage.removeItem(storage_key)
     urlSetFunction(destinationURL)
 }
+
+
+export function getConfig(storage_key){
+    const token = getTokenFromStorage(storage_key)
+    if(token===''){
+        return false
+    }
+    const config = {headers : { Authorization : `Bearer ${token}`}}
+    return config
+}

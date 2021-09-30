@@ -33,3 +33,6 @@ export const delete_division_url = `${BACKEND_URL}/admin/division`
 
 //update division
 export const edit_division_url = `${BACKEND_URL}/admin/division`
+
+//get all users
+export const get_users_url = `${BACKEND_URL}/admin/users`

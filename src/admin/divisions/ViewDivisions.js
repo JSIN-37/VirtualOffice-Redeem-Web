@@ -47,17 +47,17 @@ export default function ViewDivisions() {
   }
 
   async function handleDivisionDelete(key){
-    try{
-        const success = await deleteDivision(`${key}`)
+      let success = ''
+      try{
+        success = await deleteDivision(`${key}`)
         if(success === true){
             alert('division deleted.')
             window.location.reload()
-        }else{
-            console.log('xx',success)
         }
     }
     catch{
-        console.log("xxx error deleting division.")
+        console.log("error deleting division.")
+        alert('Cannot delete division if employees are assigned.')
     }
   }
 

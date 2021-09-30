@@ -20,7 +20,7 @@ export function addDivision(data){
             }
             else{
                 alert('cannot delete cos theres employees ')
-                resolve(response)
+                resolve(false)
             }
         })
         .catch((er)=>{

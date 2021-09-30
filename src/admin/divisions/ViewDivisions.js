@@ -56,18 +56,18 @@ export default function ViewDivisions() {
     setRenderEditDivision(true);
   }
 
-  async function updateDivisionData(id){
+  async function updateDivisionData(id) {
     const data = {
-        divisionName : divisionName,
-        divisionDescription : divisionDescription
-    }
+      divisionName: divisionName,
+      divisionDescription: divisionDescription,
+    };
 
-    const success = await updateDivision(id, data)
-    if(success){
-        alert('updated successfully')
-        window.location.reload()
-    }else{
-        alert('failed.')
+    const success = await updateDivision(id, data);
+    if (success) {
+      alert("updated successfully");
+      window.location.reload();
+    } else {
+      alert("failed.");
     }
   }
 
@@ -93,7 +93,7 @@ export default function ViewDivisions() {
         divisions.map((division) => {
           return (
             <div key={division.id}>
-              {`id = ${division.id} name= ${division.name}`}
+              {`id = ${division.id} name= ${division.name} desc=${division.description}`}
               <button
                 onClick={() => {
                   handleDivisionEdit(division);
@@ -147,14 +147,19 @@ export default function ViewDivisions() {
             type={`text`}
             input={divisionName}
             setInput={setDivisionName}
-
           />
           <InputField
             type={`text`}
             input={divisionDescription}
             setInput={setDivDesc}
           />
-          <button onClick={()=>{updateDivisionData(divisionID)}}>confirm</button>
+          <button
+            onClick={() => {
+              updateDivisionData(divisionID);
+            }}
+          >
+            confirm
+          </button>
         </>
       )}
     </>

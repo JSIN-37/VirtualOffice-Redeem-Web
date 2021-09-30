@@ -8,6 +8,8 @@ import { addDivision, deleteDivision, updateDivision } from "./functions";
 
 export default function ViewDivisions() {
   const [divisions, setDivisions] = useState([]);
+  //haha
+  const [oneDivision, setOneDivision] = useState(false)
 
   //division data
   const [divisionName, setDivisionName] = useState("");
@@ -17,6 +19,7 @@ export default function ViewDivisions() {
   //show / hide components
   const [renderAddDivision, setRenderAddDivision] = useState(false);
   const [renderEditDivision, setRenderEditDivision] = useState(false);
+
 
   useEffect(() => {
     const token = getTokenFromStorage(USER_STORAGE_KEY);
@@ -89,7 +92,7 @@ export default function ViewDivisions() {
       <div>
         <h1>View divisions</h1>
       </div>
-      {divisions.length > 0 &&
+      {divisions.length > 0 && !oneDivision &&
         divisions.map((division) => {
           return (
             <div key={division.id}>

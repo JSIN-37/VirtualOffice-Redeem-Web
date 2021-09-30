@@ -10,7 +10,7 @@ export default function AdminArea({ auth }) {
         <Route exact path="/admin">
           <Dashboard />
         </Route>
-        <Route exact path="/admin/divisions">
+        <Route exact path="/admin/all-divisions">
           <ViewDivisions />
         </Route>
       </>

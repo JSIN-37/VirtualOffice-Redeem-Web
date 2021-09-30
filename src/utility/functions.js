@@ -27,26 +27,26 @@ export function setUserToStorage(storage_key, token){
 }
 
 
-export async function checkToken(storage_key, url){
-    const token = getTokenFromStorage(storage_key)
-    if(token === ''){
-        return false
-    }else{
-        const config = {headers : {Authorization : `Bearer ${token}`}}
-        return new Promise(function (resolve, reject){
-            axios.get(url, config)
-            .then((response)=>{
-                if(response.status === 200){
-                    resolve(true)
-                }
-            })
-            .catch((er)=>{
-                console.log('error checking validity of token',er)
-                reject(false)
-            })
-        })
-    }
-}
+// export async function checkToken(storage_key, url){
+//     const token = getTokenFromStorage(storage_key)
+//     if(token === ''){
+//         return false
+//     }else{
+//         const config = {headers : {Authorization : `Bearer ${token}`}}
+//         return new Promise(function (resolve, reject){
+//             axios.get(url, config)
+//             .then((response)=>{
+//                 if(response.status === 200){
+//                     resolve(true)
+//                 }
+//             })
+//             .catch((er)=>{
+//                 console.log('error checking validity of token',er)
+//                 reject(false)
+//             })
+//         })
+//     }
+// }
 
 
 export function isAuthenticated(url, storage_key){

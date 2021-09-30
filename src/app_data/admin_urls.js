@@ -24,3 +24,6 @@ export const update_logo_url = `${BACKEND_URL}/admin/organization-logo`
 
 //get all divisions
 export const get_divisions_url = `${BACKEND_URL}/admin/divisions`
+
+//add division
+export const add_division_url = `${BACKEND_URL}/admin/division`

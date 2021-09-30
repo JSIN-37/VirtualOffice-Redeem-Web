@@ -60,7 +60,7 @@ export default function Home() {
           <EmployeeArea />
         </Route>
 
-        <Route exact path="/admin/setup">
+        <Route exact path="/setup">
           <Config />
         </Route>
         <Route exact path="/admin/login">
@@ -106,7 +106,7 @@ const UnconfiguredHome = ({ status }) => {
   }
 
   function handleAdminLogin() {
-    history.push("/admin/setup");
+    history.push("/setup");
   }
 
   return (

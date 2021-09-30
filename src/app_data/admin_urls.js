@@ -30,3 +30,6 @@ export const add_division_url = `${BACKEND_URL}/admin/division`
 
 //delete division
 export const delete_division_url = `${BACKEND_URL}/admin/division`
+
+//update division
+export const edit_division_url = `${BACKEND_URL}/admin/division`

@@ -10,7 +10,7 @@ export default function ViewUsers() {
     const [users, setUsers] = useState([])
 
 
-    //render components
+    //render components based on this.
     const[searchUserDB, setSearchUserDB] = useState(false)
 
 
@@ -19,7 +19,6 @@ export default function ViewUsers() {
         if(!config) return
         axios.get(get_users_url, config)
         .then((response)=>{
-            console.log("users response ",response)
             setUsers(response.data)
         })
         .catch((er)=>{
@@ -38,7 +37,7 @@ export default function ViewUsers() {
         <>
         <div>
             <h1>View Users</h1>
-            <button onClick={tester}>test</button>
+            <button onClick={tester}>Search Database</button>
         </div>
 
         {users.length>0 && users.map((user)=>{
@@ -50,20 +49,22 @@ export default function ViewUsers() {
             )
         })}
         
-        {searchUserDB && <SearchUser />}
+        {searchUserDB && <SearchUser setSearchUserDB={setSearchUserDB}/>}
 
         </>
     )
 }
 
 
-export const SearchUser = () =>{
+export const SearchUser = ({setSearchUserDB}) =>{
     const [divisionID, setDivisionID ] = useState('')
     const [roleID, setRoleID]= useState('')
     const [name, setName]= useState('')
     const [email, setEmail]= useState('')
+    const [searchResults, setSearchResults] = useState([])
 
-    function handleSearchButton(){
+    //create query parameters and call search from server
+    async function handleSearchButton(){
         const params = {}
         if(divisionID!==''){
             const division =  {divisionId : divisionID}
@@ -82,7 +83,12 @@ export const SearchUser = () =>{
             Object.assign(params, searchEmail)
         }
 
-        searchUser(params)
+        const res =  await searchUser(params)
+        console.log('xxx',res)
+        if(res.data.length===0){
+            alert('not found.')
+        }
+        setSearchResults(res.data)
     }
 
 
@@ -93,6 +99,15 @@ export const SearchUser = () =>{
             <InputField type={`text`} placeholder={`name`} input={name} setInput={setName} />
             <InputField type={`text`} placeholder={`email`} input={email} setInput={setEmail} />
             <button onClick={handleSearchButton}>Search Database</button>
+            <button onClick={()=>{setSearchUserDB(false)}}>Close Search Field</button>
+            <h1>Results</h1>
+            {searchResults.length >0 && searchResults.map((user)=>{
+                return (
+                    <div key={user.id}>
+                        {`${JSON.stringify(user)}`}
+                    </div>
+                )
+            })}
         </>
     )
 }

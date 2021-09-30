@@ -32,7 +32,7 @@ export async function searchUser(searchParams){
     }
     try{
         const res = await axios.get(get_users_url, config)
-        console.log('result from querying DB', res)
+        return(res)
     }
     catch{
         console.log('error fetching user')

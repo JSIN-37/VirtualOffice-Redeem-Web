@@ -27,3 +27,6 @@ export const get_divisions_url = `${BACKEND_URL}/admin/divisions`
 
 //add division
 export const add_division_url = `${BACKEND_URL}/admin/division`
+
+//delete division
+export const delete_division_url = `${BACKEND_URL}/admin/division`

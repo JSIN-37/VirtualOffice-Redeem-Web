@@ -6,7 +6,6 @@ import EmployeeArea from '../user_areas/EmployeeArea'
 import Config from '../admin/setup/Config'
 import Login from '../login/Login'
 import { Grid, Typography, Button } from '@mui/material';
-import { BACKEND_URL } from '../app_data/constants'
 import { USER_STORAGE_KEY } from '../app_data/constants'
 import { isAuthenticated } from '../utility/functions'
 import { admin_validate_url } from '../app_data/admin_urls'
@@ -19,16 +18,11 @@ import { org_info_url } from '../app_data/public_urls'
 
 //const employeeURL =`${BACKEND_URL}/employee/login`
 //replace with mechanism to check if signed in.
-export const AppData = React.createContext()
 
 export default function Home() {
     //has the admin  configured the system?
     const [configured, setConfigured] = useState()
 
-    //replace with -> read app data from local storage/cookies? (logged in or not)
-    // const [signedIn, setSignedIn] = useState(undefined)
-    // const [token, setToken] = useState('')
-    const appDataValues = { BACKEND_URL }
 
     //get organization details if system is configured.
     const [organization, setOrganization] = useState(null)
@@ -55,7 +49,6 @@ export default function Home() {
 
     return (
         <>
-            <AppData.Provider value={appDataValues}>
                 <Router>
                         <Route exact path="/">
                             {configured && <ConfiguredHome organization={organization} />}
@@ -77,7 +70,6 @@ export default function Home() {
                             <Login employee />
                         </Route>
                 </Router>
-            </AppData.Provider>
         </>
     )
 }

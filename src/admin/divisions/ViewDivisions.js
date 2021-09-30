@@ -1,3 +1,4 @@
+import { Autocomplete,  TextField } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { get_divisions_url } from "../../app_data/admin_urls";
@@ -9,7 +10,7 @@ import { addDivision, deleteDivision, updateDivision } from "./functions";
 export default function ViewDivisions() {
   const [divisions, setDivisions] = useState([]);
   //haha
-  const [oneDivision, setOneDivision] = useState(false)
+  const [oneDivision, setOneDivision] = useState(false);
 
   //division data
   const [divisionName, setDivisionName] = useState("");
@@ -19,7 +20,6 @@ export default function ViewDivisions() {
   //show / hide components
   const [renderAddDivision, setRenderAddDivision] = useState(false);
   const [renderEditDivision, setRenderEditDivision] = useState(false);
-
 
   useEffect(() => {
     const token = getTokenFromStorage(USER_STORAGE_KEY);
@@ -87,10 +87,26 @@ export default function ViewDivisions() {
     }
   }
 
+  function logValue(event,value){
+    setOneDivision(value)
+  }
+
   return (
     <>
       <div>
         <h1>View divisions</h1>
+
+        <Autocomplete
+          options={divisions}
+          getOptionLabel={(option) => option.name}
+          renderInput={(params) => (
+            <TextField {...params} label="Division Name" />
+          )}
+          onChange={logValue}
+        />
+        <br />
+        <br />
+        <br />
       </div>
       {divisions.length > 0 && !oneDivision &&
         divisions.map((division) => {
@@ -114,6 +130,32 @@ export default function ViewDivisions() {
             </div>
           );
         })}
+
+        {oneDivision &&  (
+          <>
+            <div>
+              {`id = ${oneDivision.id} name=${oneDivision.name} desc=${oneDivision.description}`}
+              <button
+                onClick={() => {
+                  handleDivisionEdit(oneDivision);
+                }}
+              >
+                edit this division
+              </button>
+              <button
+                onClick={() => {
+                  handleDivisionDelete(oneDivision.id);
+                }}
+              >
+                delete this division
+              </button>
+              <br/>
+              <br/>
+            </div>
+          </>
+        )}
+
+
       <div>
         <button
           onClick={() => {

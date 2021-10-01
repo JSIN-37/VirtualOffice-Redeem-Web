@@ -5,6 +5,7 @@ import { USER_STORAGE_KEY } from '../app_data/constants'
 import { getTokenFromStorage, setUserToStorage } from '../utility/functions'
 import { admin_login_url } from '../app_data/admin_urls'
 import { employee_login_url } from '../app_data/employee_urls'
+import LoadingScreen from '../utility/LoadingScreen'
 
 export default function Login(props) {
     const history = useHistory()
@@ -18,6 +19,7 @@ export default function Login(props) {
         }
     }
 
+    const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -53,6 +55,7 @@ export default function Login(props) {
     // }
 
     async function handleLogIn(url, credentials, destination){
+        setLoading(true)
         try{
             const res = await logIn(url, credentials)
             console.log("login page, handle login func, result -> ", (res))
@@ -63,7 +66,7 @@ export default function Login(props) {
         catch{
             console.log("error logging IN ")
         }
-
+        setLoading(false)
     }
 
     function handleLogInButton(){
@@ -85,6 +88,10 @@ export default function Login(props) {
 
     }
 
+
+    if(loading){
+        return <LoadingScreen message={'checking details...'}/>
+    }
     
     
     return (

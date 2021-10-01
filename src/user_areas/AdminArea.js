@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect, Route } from "react-router";
 import Dashboard from "../admin/Dashboard";
 import ViewDivisions from "../admin/divisions/ViewDivisions";
-import LoadingScreen from "../admin/other/LoadingScreen";
+import LoadingScreen from "../utility/LoadingScreen";
 import RoleManagement from "../admin/roles_and_permissions/RoleManagement";
 import ViewUsers from "../admin/users/ViewUsers";
 import { admin_validate_url } from "../app_data/admin_urls";
@@ -58,7 +58,7 @@ export default function AdminArea() {
           </Route>
         </>
       )}
-      {loading && <LoadingScreen />}
+      {loading && <LoadingScreen message={'loading...'} />}
     </>
   );
 }

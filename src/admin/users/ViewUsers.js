@@ -45,6 +45,7 @@ export default function ViewUsers() {
                 //REPLACE THIS WITH CARD? 
                 <div key={user.id}>
                     {`${JSON.stringify(user)}`}
+                    <br/><br/><br/><br/>
                 </div>
             )
         })}

@@ -36,3 +36,7 @@ export const edit_division_url = `${BACKEND_URL}/admin/division`
 
 //get all users
 export const get_users_url = `${BACKEND_URL}/admin/users`
+
+
+//get roles
+export const get_roles_url = `${BACKEND_URL}/admin/roles`

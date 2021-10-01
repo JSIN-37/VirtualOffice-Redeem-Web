@@ -3,6 +3,7 @@ import { Redirect, Route } from "react-router";
 import Dashboard from "../admin/Dashboard";
 import ViewDivisions from "../admin/divisions/ViewDivisions";
 import LoadingScreen from "../admin/other/LoadingScreen";
+import RoleManagement from "../admin/roles_and_permissions/RoleManagement";
 import ViewUsers from "../admin/users/ViewUsers";
 import { admin_validate_url } from "../app_data/admin_urls";
 import { USER_STORAGE_KEY } from "../app_data/constants";
@@ -51,6 +52,9 @@ export default function AdminArea() {
           </Route>
           <Route exact path="/admin/all-users">
             <ViewUsers />
+          </Route>
+          <Route exact path='/admin/roles' >
+            <RoleManagement/>
           </Route>
         </>
       )}

@@ -21,13 +21,17 @@ export default function Dashboard() {
         history.push('/admin/all-users')
     }
 
+    function handleViewRoles(){
+        history.push('/admin/roles')
+    }
+
     return (
         <div>
             <h1>Admin Dashboard</h1>
             <button onClick={handleViewDivisions}>View All divisions </button>
             <button onClick={handleViewUsers}>View All users </button>
-           <button onClick={handleLogOut}>logout</button>
-
+            <button onClick={handleViewRoles}>Roles and Permissions</button>
+            <button onClick={handleLogOut}>logout</button>
         </div>
     )
 }

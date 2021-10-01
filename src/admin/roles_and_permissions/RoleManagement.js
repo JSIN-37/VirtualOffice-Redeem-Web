@@ -6,9 +6,9 @@ import LoadingScreen from '../../utility/LoadingScreen'
 import axios from 'axios';
 
 export default function RoleManagement() {
-
     const [loading, setLoading] = useState(false)
     const [roles, setRoles] = useState([])
+    const [inspect, setInspect] = useState(null)
 
     useEffect(() => {
         setLoading(true)
@@ -45,8 +45,38 @@ export default function RoleManagement() {
         <>
             <h1>Rolls</h1>
             {roles.length>0 && roles.map((role)=>{
-                return ( <div> {`${JSON.stringify(role)}`} <br/><br/><br/></div>)
+                return ( 
+                <div> 
+                  {`role id = ${role.id} role name= ${role.name} role desc= ${role.description}`}
+                  <button onClick={()=>{setInspect(role)}}>inspect</button> 
+                <br/><br/><br/>
+                </div>)
             })}
+            {inspect && <InspectRole permissions={inspect.permissions} name={inspect.name} id={inspect.id} open={setInspect}/>}
         </>
     )
+}
+
+
+
+export const InspectRole = ({permissions, name, id, open}) =>{
+  
+  const [docPerms, setDocPerms] = useState(permissions.docs.allow? permissions.docs : false)
+  const [personalTaskPerms, setPersonalTaskPerms] = useState(permissions.tasks.allow? permissions.tasks.personal : false )
+  const [ownDivTasks, setOwnDivTasks] = useState(permissions.tasks.allow ? permissions.tasks.ownDivision : false)
+  const [allDivTasks, setAllDivTasks] = useState(permissions.tasks.allow ? permissions.tasks.allDivisions : false)
+  const [teamPerms, setTeamPerms] = useState(permissions.teams)
+
+  return(
+    <>
+      <p>{`Role Name : ${name}  Role ID : ${id}`}</p>
+      {docPerms && <div>{`doc permissions : ${JSON.stringify(docPerms)}`}</div>}
+      {personalTaskPerms && <div>{`personal task : ${JSON.stringify(personalTaskPerms)}`}</div>}
+      {ownDivTasks && <div>{`own div : ${JSON.stringify(ownDivTasks)}`}</div>}
+      {allDivTasks && <div>{`all div : ${JSON.stringify(allDivTasks)}`}</div>}
+      {teamPerms && <div>{`teams : ${JSON.stringify(teamPerms)}`}</div>}
+      <button onClick={()=>{open(false)}}>Close</button>
+    </>
+  )
+
 }

@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import InputField from '../other/InputField'
 import { personalTaskPermisssions } from './permissions'
+import PermissionSet from './PermissionSet'
 
 
 
@@ -11,6 +12,9 @@ export default function CreateRole({open}) {
     const [roleName, setRoleName] = useState('')
     const [roleDescription, setDescription] = useState('')
     //const [rolePermissions, setRolePermissions] = useState({})
+
+    //render stuff 
+    const [renderTaskPerms, setRenderTaskPerms] = useState(false)
 
     //permissions - docs
     //const [docs, setDocs] = useState(permissions.docs)
@@ -23,9 +27,8 @@ export default function CreateRole({open}) {
             <h1>Create Role</h1>
             <InputField type={'text'} placeholder={'Name for Role'} input={roleName} setInput={setRoleName} />
             <InputField type={'text'} placeholder={'Description '} input={roleDescription} setInput={setDescription} />
-            {tasks.map((task)=>{
-                return <p key={task[0]}>{`${task[0]} -> description - ${JSON.stringify(task[1].description)} value - ${JSON.stringify(task[1].value)}`}</p>
-            })}
+            {renderTaskPerms && <PermissionSet permissionGroup={tasks} setPermissionGroup={setTasks} open={setRenderTaskPerms}/>}
+            <button onClick={()=>{setRenderTaskPerms(true)}}>Task Permissions</button>
             <button onClick={()=>{open(false)}}>back</button>
         </div>
     )

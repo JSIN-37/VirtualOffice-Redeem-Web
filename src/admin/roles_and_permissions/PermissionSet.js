@@ -1,13 +1,11 @@
+//NOT COMPLETE -> Have to generalise the click handler function. 
+
 import {  Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import React, { useState } from 'react'
 
 export default function PermissionSet({permissionGroup, setPermissionGroup}) {
 
-    console.log("required format -> ",permissionGroup)
     const [permissions, setPermissions] = useState(permissionGroup)
-    
-    console.log("local state -> ", permissions)
-    
     
     function handleChange(event){
         const newPermissions = [...permissions]
@@ -18,6 +16,8 @@ export default function PermissionSet({permissionGroup, setPermissionGroup}) {
         setPermissions(newPermissions)
     }
 
+    
+    //have to change this setGroupPermission(permissions) and handle new one from parent component
     function handleSaveTaskPerms(){
         console.log(permissions)
     }
@@ -28,7 +28,6 @@ export default function PermissionSet({permissionGroup, setPermissionGroup}) {
             <FormGroup>
             <>
             {permissions.map((perms)=>{
-                //console.log('perm = ',perms[1].description)
                 return (
                     <FormControlLabel key={perms[0]} value={perms[1].value}
                         control = { <Checkbox  checked={perms[1].value} id={perms[0]} onChange={handleChange}/>}

@@ -1,9 +1,7 @@
-//NOT COMPLETE -> Have to generalise the click handler function. 
-
 import {  Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import React, { useState } from 'react'
 
-export default function PermissionSet({permissionGroup, setPermissionGroup}) {
+export default function PermissionSet({permissionGroup, setPermissionGroup, name, open}) {
 
     const [permissions, setPermissions] = useState(permissionGroup)
     
@@ -11,7 +9,7 @@ export default function PermissionSet({permissionGroup, setPermissionGroup}) {
         const newPermissions = [...permissions]
         const permissionObject = permissions.filter((per)=>per[0]===event.target.id)
         const indexOfPermission = permissions.indexOf(permissionObject[0])
-        permissionObject[0][1].value = true
+        permissionObject[0][1].value ? permissionObject[0][1].value = false : permissionObject[0][1].value = true
         newPermissions.splice(indexOfPermission, 1, permissionObject[0])
         setPermissions(newPermissions)
     }
@@ -19,7 +17,9 @@ export default function PermissionSet({permissionGroup, setPermissionGroup}) {
     
     //have to change this setGroupPermission(permissions) and handle new one from parent component
     function handleSaveTaskPerms(){
+        setPermissionGroup(permissions)
         console.log(permissions)
+        alert('array in CreateRole.js has new permission values.Check console log.')
     }
 
 
@@ -35,8 +35,9 @@ export default function PermissionSet({permissionGroup, setPermissionGroup}) {
                     />
                 )
             })}
-            <button onClick={handleSaveTaskPerms}>save task permissions </button>
-            <br/><br/><br/><br/>
+            <button onClick={handleSaveTaskPerms} >save {`${name}`} permissions </button>
+            <button onClick={()=>{open(false)}}> Close {`${name}`} Permissions</button>
+
             </>
             </FormGroup>
         </div>

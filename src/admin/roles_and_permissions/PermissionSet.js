@@ -17,9 +17,10 @@ export default function PermissionSet({permissionGroup, setPermissionGroup, name
     
     //have to change this setGroupPermission(permissions) and handle new one from parent component
     function handleSaveTaskPerms(){
-        setPermissionGroup(permissions)
-        console.log(permissions)
-        alert('array in CreateRole.js has new permission values.Check console log.')
+        const sendBack = Object.fromEntries(permissions)
+        setPermissionGroup(sendBack)
+        console.log(`Permssions saved for ${name}= `, sendBack )
+        open(false)
     }
 
 

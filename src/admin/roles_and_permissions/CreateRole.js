@@ -6,8 +6,7 @@ import PermissionSet from './PermissionSet'
 import { USER_STORAGE_KEY } from '../../app_data/constants';
 import axios from 'axios'
 import { post_roles_url } from '../../app_data/admin_urls'
-
-
+import LoadingScreen from '../../utility/LoadingScreen'
 
 
 export default function CreateRole({open}) {
@@ -17,6 +16,7 @@ export default function CreateRole({open}) {
     //const [rolePermissions, setRolePermissions] = useState({})
 
     //render stuff 
+    const [loading, setLoading] = useState(false)
     const [renderDocPerms, setRenderDocPerms] = useState(false)
     const [renderPersonalTaskPerms, setRenderPersonalTaskPerms] = useState(false)
     const [renderOwnDivTaskPerms, setRenderOwnDivTaskPerms] = useState(false)
@@ -37,7 +37,16 @@ export default function CreateRole({open}) {
     const [teamFinal, setTeamFinal] = useState({...teamPermissions})
     const [docsFinal, setDocsFinal] = useState({...documentPermissions})
 
-    function createRole(){
+    async function createRole(){
+        if(roleName===''){
+            alert("add role name")
+            return
+        }
+        if(roleDescription===''){
+            alert('add role description')
+            return
+        }
+
         const rolePermissions = {
             personalTaskPermissions : personalTaskFinal,
             ownDivisionTaskPermissions : ownDivFinal,
@@ -56,14 +65,29 @@ export default function CreateRole({open}) {
             alert("not authenticated. Log out and log in again.")
             return
         }
-        axios.post(post_roles_url, data,config)
-        .then((response)=>{
-            console.log("success , ",response)
-        })
-        .catch((er)=>{
-            console.log('error saving role. ', er)
-        })
+        
+        try{
+            setLoading(true)
+            const res = await axios.post(post_roles_url, data,config)
+            if(res.status === 200){
+                alert('added role.')
+                setLoading(false)
+                window.location.reload()
+            }else{
+                alert('failed. ')
+                setLoading(false)
+            }   
+        }
+        catch{
+            alert('failed to create role.')
+            setLoading(false)
+        }
+        
     }   
+
+    if(loading){
+        return <LoadingScreen message={`Saving role...`}/>
+    }
  
     return (
         <div>

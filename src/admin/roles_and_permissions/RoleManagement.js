@@ -73,7 +73,6 @@ export const InspectRole = ({permissions, name, id, open}) =>{
   const [ownDivTasks, setOwnDivTasks] = useState(permissions.ownDivisionTaskPermissions)
   const [allDivTasks, setAllDivTasks] = useState(permissions.allDivisionsTaskPermissions)
   const [teamPerms, setTeamPerms] = useState(permissions.teamPermissions)
-  console.log("inspecting -> ",permissions.personalTaskPermissions)
   return(
     <>
       <p>{`Role Name : ${name}  Role ID : ${id}`}</p>

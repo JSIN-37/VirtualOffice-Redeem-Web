@@ -7,10 +7,12 @@ import { getConfig} from '../../utility/functions';
 import LoadingScreen from '../../utility/LoadingScreen'
 import axios from 'axios';
 import CreateRole from './CreateRole';
+import { deleteRole } from './functions';
 
 export default function RoleManagement() {
     //rendering components
     const [loading, setLoading] = useState(false)
+    const [deleting, setDeleting] = useState(false)
     const [roles, setRoles] = useState([])
     const [inspect, setInspect] = useState(null)
     const [createRole, setCreateRole] = useState(false)
@@ -40,8 +42,24 @@ export default function RoleManagement() {
         };
       }, []);
     
+    async function handleDeleteRole(id){
+      setDeleting(true)
+      try{
+        const success = await deleteRole(`${id}`)
+        if(success === true){
+          alert('deleted role.')
+          window.location.reload();
+        }
+      }
+      catch{
+        alert('couldnt delete division.')
+        setDeleting(false)
+      }
+    }
 
-
+    if(deleting){
+      return <LoadingScreen message={`deleting role...`} />
+    }
 
     if(loading){
         return ( <LoadingScreen message={'fetching roles'}/>)
@@ -55,6 +73,7 @@ export default function RoleManagement() {
                 <div key={role.id}> 
                   {`role id = ${role.id} role name= ${role.name} role desc= ${role.description}`}
                   <button onClick={()=>{setInspect(role)}}>inspect</button> 
+                  <button onClick={()=>handleDeleteRole(role.id)}>Delete</button>
                 <br/><br/><br/>
                 </div>)
             })}

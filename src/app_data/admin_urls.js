@@ -41,3 +41,4 @@ export const get_users_url = `${BACKEND_URL}/admin/users`
 //get roles
 export const get_roles_url = `${BACKEND_URL}/admin/roles`
 export const post_roles_url = `${BACKEND_URL}/admin/role`
+export const delete_roles_url = `${BACKEND_URL}/admin/role`

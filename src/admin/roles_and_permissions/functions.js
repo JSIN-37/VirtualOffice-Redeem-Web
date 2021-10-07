@@ -25,7 +25,6 @@ export async function saveRole(data, url, method,id){
                 console.log('error creating role.',e)
                 return false
             }
-            break;
         case 'edit':
             try{
                 const res = await axios.put(`${url}/${id}`, data, config)
@@ -37,7 +36,11 @@ export async function saveRole(data, url, method,id){
             }
             catch(e){
                 console.log('error updating -> ',e)
+                return false
             }
+
+        default:
+            return false
     }
 }
 

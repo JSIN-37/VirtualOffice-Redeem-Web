@@ -7,6 +7,7 @@ import { getConfig} from '../../utility/functions';
 import LoadingScreen from '../../utility/LoadingScreen'
 import axios from 'axios';
 import CreateRole from './CreateRole';
+import InspectRole from './InspectRole';
 import { deleteRole } from './functions';
 
 export default function RoleManagement() {
@@ -30,7 +31,7 @@ export default function RoleManagement() {
           .get(get_roles_url, config)
           .then((response) => {
             setRoles(response.data);
-            console.log(response.data)
+            console.log('in use effect',response.data)
             setLoading(false)
           })
           .catch((er) => {
@@ -86,25 +87,3 @@ export default function RoleManagement() {
     )
 }
 
-
-
-export const InspectRole = ({permissions, name, id, open}) =>{
-  
-  const [docPerms, setDocPerms] = useState(permissions.documentPermissions)
-  const [personalTaskPerms, setPersonalTaskPerms] = useState(permissions.personalTaskPermissions )
-  const [ownDivTasks, setOwnDivTasks] = useState(permissions.ownDivisionTaskPermissions)
-  const [allDivTasks, setAllDivTasks] = useState(permissions.allDivisionsTaskPermissions)
-  const [teamPerms, setTeamPerms] = useState(permissions.teamPermissions)
-  return(
-    <>
-      <p>{`Role Name : ${name}  Role ID : ${id}`}</p>
-      {docPerms && <div>{`doc permissions : ${JSON.stringify(docPerms)}`}</div>}
-      {personalTaskPerms && <div>{`personal task : ${JSON.stringify(personalTaskPerms)}`}</div>}
-      {ownDivTasks && <div>{`own div : ${JSON.stringify(ownDivTasks)}`}</div>}
-      {allDivTasks && <div>{`all div : ${JSON.stringify(allDivTasks)}`}</div>}
-      {teamPerms && <div>{`teams : ${JSON.stringify(teamPerms)}`}</div>}
-      <button onClick={()=>{open(false)}}>Close</button>
-    </>
-  )
-
-}

@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
-import { getConfig } from '../../utility/functions'
 import InputField from '../other/InputField'
 import { allDivisionsTaskPermissions, documentPermissions, ownDivisionTaskPermissions, personalTaskPermisssions, teamPermissions } from './permissions'
 import PermissionSet from './PermissionSet'
-import { USER_STORAGE_KEY } from '../../app_data/constants';
-import axios from 'axios'
 import { edit_role_url, post_roles_url } from '../../app_data/admin_urls'
 import LoadingScreen from '../../utility/LoadingScreen'
 import { Checkbox, FormControlLabel } from '@mui/material'
@@ -31,7 +28,6 @@ export default function CreateRole({open, edit, version}) {
     const ownDivisionTasks= !edit ? Object.entries({...ownDivisionTaskPermissions}) : Object.entries(edit.permissions.ownDivisionTaskPermissions)
     const allDivisionTasks = !edit ? Object.entries({...allDivisionsTaskPermissions}) : Object.entries(edit.permissions.allDivisionsTaskPermissions)
     const teamPerms= !edit ? Object.entries({...teamPermissions}) : Object.entries(edit.permissions.teamPermissions)
-    console.log('doc perms -> ',`${version}`,docsPermissions)
 
     //permissions - saved from users selections -> used to send to server
     const [personalTaskFinal, setPersonalFinal] = useState({...personalTaskPermisssions})
@@ -91,7 +87,7 @@ export default function CreateRole({open, edit, version}) {
             }
         }else{
             try{
-                const response = await saveRole(data,edit_role_url,'create')
+                const response = await saveRole(data,post_roles_url,'create')
                 if(response){
                     alert('created role.')
                     window.location.reload()

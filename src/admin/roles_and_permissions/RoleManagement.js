@@ -75,7 +75,7 @@ export default function RoleManagement() {
                   {`role id = ${role.id} role name= ${role.name} role desc= ${role.description}`}
                   <button onClick={()=>{setInspect(role)}}>inspect</button> 
                   <button onClick={()=>handleDeleteRole(role.id)}>Delete</button>
-                  <button onClick={()=>{setEdit(role.permissions)}}>Edit Role</button>
+                  <button onClick={()=>{setEdit(role)}}>Edit Role</button>
                 <br/><br/><br/>
                 </div>)
             })}

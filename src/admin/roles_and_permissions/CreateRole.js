@@ -5,14 +5,16 @@ import { allDivisionsTaskPermissions, documentPermissions, ownDivisionTaskPermis
 import PermissionSet from './PermissionSet'
 import { USER_STORAGE_KEY } from '../../app_data/constants';
 import axios from 'axios'
-import { post_roles_url } from '../../app_data/admin_urls'
+import { edit_role_url, post_roles_url } from '../../app_data/admin_urls'
 import LoadingScreen from '../../utility/LoadingScreen'
+import { Checkbox, FormControlLabel } from '@mui/material'
+import { saveRole } from './functions'
 
 
 export default function CreateRole({open, edit, version}) {
-    console.log("edit -> ", edit)
-    const [roleName, setRoleName] = useState('')
-    const [roleDescription, setDescription] = useState('')
+
+    const [roleName, setRoleName] = useState(edit ? edit.name : '')
+    const [roleDescription, setDescription] = useState(edit ? edit.description : '')
     //const [rolePermissions, setRolePermissions] = useState({})
 
     //render stuff 
@@ -24,11 +26,11 @@ export default function CreateRole({open, edit, version}) {
     const [renderTeamPerms, setRenderTeamPerms] = useState(false)
 
     //permissions - from datastore -> used for changing permissions
-    const docsPermissions = !edit ? Object.entries({...documentPermissions}) : Object.entries(edit.documentPermissions)
-    const personalTasks= !edit ? Object.entries({...personalTaskPermisssions}) : Object.entries(edit.personalTaskPermissions)
-    const ownDivisionTasks= !edit ? Object.entries({...ownDivisionTaskPermissions}) : Object.entries(edit.ownDivisionTaskPermissions)
-    const allDivisionTasks = !edit ? Object.entries({...allDivisionsTaskPermissions}) : Object.entries(edit.allDivisionsTaskPermissions)
-    const teamPerms= !edit ? Object.entries({...teamPermissions}) : Object.entries(edit.teamPermissions)
+    const docsPermissions = !edit ? Object.entries({...documentPermissions}) : Object.entries(edit.permissions.documentPermissions)
+    const personalTasks= !edit ? Object.entries({...personalTaskPermisssions}) : Object.entries(edit.permissions.personalTaskPermissions)
+    const ownDivisionTasks= !edit ? Object.entries({...ownDivisionTaskPermissions}) : Object.entries(edit.permissions.ownDivisionTaskPermissions)
+    const allDivisionTasks = !edit ? Object.entries({...allDivisionsTaskPermissions}) : Object.entries(edit.permissions.allDivisionsTaskPermissions)
+    const teamPerms= !edit ? Object.entries({...teamPermissions}) : Object.entries(edit.permissions.teamPermissions)
     console.log('doc perms -> ',`${version}`,docsPermissions)
 
     //permissions - saved from users selections -> used to send to server
@@ -37,6 +39,12 @@ export default function CreateRole({open, edit, version}) {
     const [allDivFinal, setAllDivFinal] = useState({...allDivisionsTaskPermissions})
     const [teamFinal, setTeamFinal] = useState({...teamPermissions})
     const [docsFinal, setDocsFinal] = useState({...documentPermissions})
+
+    //if editing role, need a checkbox to set overwrite situation
+    const [overwrite, setOverwrite] = useState(false)
+
+    //change button text between edit and create 
+    const btnText = edit ? `Save Edits` : `Create Role`
 
     async function createRole(){
         if(roleName===''){
@@ -60,30 +68,46 @@ export default function CreateRole({open, edit, version}) {
             roleDescription : roleDescription,
             rolePermissions : rolePermissions
         }
-        console.log(rolePermissions)
-        const config = getConfig(USER_STORAGE_KEY)
-        if(!config){
-            alert("not authenticated. Log out and log in again.")
-            return
-        }
-        
-        try{
+
+        setLoading(true)
+        if(edit){
+            Object.assign(data, {overwriteCustomUserPermissions : overwrite} )
             setLoading(true)
-            const res = await axios.post(post_roles_url, data,config)
-            if(res.status === 200){
-                alert('added role.')
+            try{
+                const response = await saveRole(data,edit_role_url,'edit',edit.id)
+                if(response){
+                    alert('Role saved.')
+                    window.location.reload()
+                }else{
+                    alert('failed to save role. Check console for response.')
+                    setLoading(false)
+                    console.log(response)
+                }
+            }
+            catch(e){
+                alert('failed to save role. Check console for catch.')
                 setLoading(false)
-                window.location.reload()
-            }else{
-                alert('failed. ')
+                console.log("error saving role -> ",e)
+            }
+        }else{
+            try{
+                const response = await saveRole(data,edit_role_url,'create')
+                if(response){
+                    alert('created role.')
+                    window.location.reload()
+                }else{
+                    alert('failed to create role. Check console for response.')
+                    setLoading(false)
+                    console.log(response)
+                }
+            }
+            catch(e){
+                alert('Failed to create. Check console for catch.')
+                console.log(e)
                 setLoading(false)
-            }   
+            }
         }
-        catch{
-            alert('failed to create role.')
-            setLoading(false)
-        }
-        
+
     }   
 
     if(loading){
@@ -93,6 +117,7 @@ export default function CreateRole({open, edit, version}) {
     return (
         <div>
             <h1>{`${version}`}</h1>
+            {edit && <FormControlLabel label={'Overwrite existing users?'} control={<Checkbox label={`Overwrite??`} checked={overwrite} onChange={(e)=>{setOverwrite(e.target.checked)}}/>}/>}
             <InputField type={'text'} placeholder={'Name for Role'} input={roleName} setInput={setRoleName} />
             <InputField type={'text'} placeholder={'Description '} input={roleDescription} setInput={setDescription} />
             {renderDocPerms && <PermissionSet name={'Doc'} permissionGroup={docsPermissions} setPermissionGroup={setDocsFinal} open={setRenderDocPerms}/>}
@@ -106,7 +131,7 @@ export default function CreateRole({open, edit, version}) {
             <button onClick={()=>{setRenderAllDivTaskPerms(true)}}>All Div Tasks</button>
             <button onClick={()=>setRenderTeamPerms(true)}>Team Permissions</button>
             <button onClick={()=>{open(false)}}>back</button>
-            <button onClick={createRole}>CreateRole</button>
+            <button onClick={createRole}>{`${btnText}`}</button>
         </div>
     )
 }

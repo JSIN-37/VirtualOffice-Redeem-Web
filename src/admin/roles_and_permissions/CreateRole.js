@@ -9,8 +9,8 @@ import { post_roles_url } from '../../app_data/admin_urls'
 import LoadingScreen from '../../utility/LoadingScreen'
 
 
-export default function CreateRole({open}) {
-
+export default function CreateRole({open, edit, version}) {
+    console.log("edit -> ", edit)
     const [roleName, setRoleName] = useState('')
     const [roleDescription, setDescription] = useState('')
     //const [rolePermissions, setRolePermissions] = useState({})
@@ -24,11 +24,12 @@ export default function CreateRole({open}) {
     const [renderTeamPerms, setRenderTeamPerms] = useState(false)
 
     //permissions - from datastore -> used for changing permissions
-    const docsPermissions = Object.entries({...documentPermissions})
-    const personalTasks= Object.entries({...personalTaskPermisssions})
-    const ownDivisionTasks= Object.entries({...ownDivisionTaskPermissions})
-    const allDivisionTasks = Object.entries({...allDivisionsTaskPermissions})
-    const teamPerms= Object.entries({...teamPermissions})
+    const docsPermissions = !edit ? Object.entries({...documentPermissions}) : Object.entries(edit.documentPermissions)
+    const personalTasks= !edit ? Object.entries({...personalTaskPermisssions}) : Object.entries(edit.personalTaskPermissions)
+    const ownDivisionTasks= !edit ? Object.entries({...ownDivisionTaskPermissions}) : Object.entries(edit.ownDivisionTaskPermissions)
+    const allDivisionTasks = !edit ? Object.entries({...allDivisionsTaskPermissions}) : Object.entries(edit.allDivisionsTaskPermissions)
+    const teamPerms= !edit ? Object.entries({...teamPermissions}) : Object.entries(edit.teamPermissions)
+    console.log('doc perms -> ',`${version}`,docsPermissions)
 
     //permissions - saved from users selections -> used to send to server
     const [personalTaskFinal, setPersonalFinal] = useState({...personalTaskPermisssions})
@@ -91,7 +92,7 @@ export default function CreateRole({open}) {
  
     return (
         <div>
-            <h1>Create Role</h1>
+            <h1>{`${version}`}</h1>
             <InputField type={'text'} placeholder={'Name for Role'} input={roleName} setInput={setRoleName} />
             <InputField type={'text'} placeholder={'Description '} input={roleDescription} setInput={setDescription} />
             {renderDocPerms && <PermissionSet name={'Doc'} permissionGroup={docsPermissions} setPermissionGroup={setDocsFinal} open={setRenderDocPerms}/>}

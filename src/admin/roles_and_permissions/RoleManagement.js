@@ -15,6 +15,7 @@ export default function RoleManagement() {
     const [deleting, setDeleting] = useState(false)
     const [roles, setRoles] = useState([])
     const [inspect, setInspect] = useState(null)
+    const [edit, setEdit] = useState(null)
     const [createRole, setCreateRole] = useState(false)
 
     useEffect(() => {
@@ -74,11 +75,13 @@ export default function RoleManagement() {
                   {`role id = ${role.id} role name= ${role.name} role desc= ${role.description}`}
                   <button onClick={()=>{setInspect(role)}}>inspect</button> 
                   <button onClick={()=>handleDeleteRole(role.id)}>Delete</button>
+                  <button onClick={()=>{setEdit(role.permissions)}}>Edit Role</button>
                 <br/><br/><br/>
                 </div>)
             })}
             {inspect && <InspectRole permissions={inspect.permissions} name={inspect.name} id={inspect.id} open={setInspect}/>}
-            {createRole && <CreateRole open={setCreateRole}/>}
+            {createRole && <CreateRole open={setCreateRole} version={`Create New Role`}/>}
+            {edit && <CreateRole open={setEdit} edit={edit} version={`Edit existing Role`}/>} 
         </>
     )
 }

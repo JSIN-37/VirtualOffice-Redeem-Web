@@ -1,7 +1,29 @@
 import axios from "axios";
-import { delete_roles_url } from "../../app_data/admin_urls";
+import { delete_roles_url, get_roles_url } from "../../app_data/admin_urls";
 import { USER_STORAGE_KEY } from "../../app_data/constants";
 import { getConfig, getTokenFromStorage } from "../../utility/functions";
+
+
+export async function getRoles(){
+    const config = getConfig(USER_STORAGE_KEY)
+    if(!config){
+        return false
+    }
+    return new Promise(function (resolve,reject){
+        axios.get(get_roles_url,config)
+        .then((response)=>{
+            if(response.status===200){
+                resolve(response.data) 
+            }else{
+                reject(false)
+            }
+        })
+        .catch((e)=>{
+            console.log("error fetching roles.", e )
+            reject(false)
+        })
+    })
+}
 
 
 //change url dependig on edit role or create role.

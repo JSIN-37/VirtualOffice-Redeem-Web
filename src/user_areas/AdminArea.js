@@ -1,27 +1,64 @@
-import React, {useContext} from 'react'
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom'
-import Config from '../admin/setup/Config'
-import { AppData } from '../home/Home'
-
+import React, { useState, useEffect } from "react";
+import { Redirect, Route } from "react-router";
+import Dashboard from "../admin/Dashboard";
+import ViewDivisions from "../admin/divisions/ViewDivisions";
+import LoadingScreen from "../utility/LoadingScreen";
+import RoleManagement from "../admin/roles_and_permissions/RoleManagement";
+import ViewUsers from "../admin/users/ViewUsers";
+import { admin_validate_url } from "../app_data/admin_urls";
+import { USER_STORAGE_KEY } from "../app_data/constants";
+import { isAuthenticated } from "../utility/functions";
 
 export default function AdminArea() {
+  //render loading screen
+  const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(null)
 
-    const {signedIn} = useContext(AppData) //replace with sign in function
-    const history = useHistory()
+  
+  useEffect(() => {
+    checkToken()
+    async function checkToken(){
+      try{
+        setLoading(true)
+        const auth = await isAuthenticated(admin_validate_url, USER_STORAGE_KEY)
+        if(auth){
+          setRedirect(false)
+          setLoading(false)
+        }else{
+          setRedirect(true)
+        }
+      }
+      catch{
+        console.log("error checking token")
+        localStorage.removeItem(USER_STORAGE_KEY)
+        setRedirect(true)
+      }
+    }
+  }, []);
 
-    return (
+  if(redirect){
+    return <Redirect push to="/admin/login" />
+  }
+
+  return (
+    <>
+      {!loading && (
         <>
-        {signedIn && <>
-            <h1>Admin Area</h1>
-            <Router>
-                <Switch>
-                    <Route exact path="/admin/setup">
-                        <Config />
-                    </Route>
-                </Switch>
-            </Router>
-        </>}
-        {!signedIn && history.push('/admin/login')}
+          <Route exact path="/admin">
+            <Dashboard />
+          </Route>
+          <Route exact path="/admin/all-divisions">
+            <ViewDivisions />
+          </Route>
+          <Route exact path="/admin/all-users">
+            <ViewUsers />
+          </Route>
+          <Route exact path='/admin/roles' >
+            <RoleManagement/>
+          </Route>
         </>
-    )
+      )}
+      {loading && <LoadingScreen message={'loading...'} />}
+    </>
+  );
 }

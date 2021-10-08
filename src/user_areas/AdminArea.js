@@ -5,6 +5,7 @@ import ViewDivisions from "../admin/divisions/ViewDivisions";
 import LoadingScreen from "../utility/LoadingScreen";
 import RoleManagement from "../admin/roles_and_permissions/RoleManagement";
 import ViewUsers from "../admin/users/ViewUsers";
+import CreateUser from '../admin/users/CreateUser'
 import { admin_validate_url } from "../app_data/admin_urls";
 import { USER_STORAGE_KEY } from "../app_data/constants";
 import { isAuthenticated } from "../utility/functions";
@@ -55,6 +56,9 @@ export default function AdminArea() {
           </Route>
           <Route exact path='/admin/roles' >
             <RoleManagement/>
+          </Route>
+          <Route exact path='/admin/new-user'>
+            <CreateUser />
           </Route>
         </>
       )}

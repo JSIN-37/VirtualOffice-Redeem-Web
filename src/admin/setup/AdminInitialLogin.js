@@ -20,7 +20,6 @@ const useStyles = makeStyles({
         width: "36%",
         padding: "20px",
         overflow: "auto",
-        backgroundColor: "#f9f9f9",
     },
     media: {
         margin: "15px auto",

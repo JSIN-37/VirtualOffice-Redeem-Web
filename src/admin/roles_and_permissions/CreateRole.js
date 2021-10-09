@@ -5,7 +5,7 @@ import PermissionSet from './PermissionSet'
 import { edit_role_url, post_roles_url } from '../../app_data/admin_urls'
 import LoadingScreen from '../../utility/LoadingScreen'
 import { Checkbox, FormControlLabel } from '@mui/material'
-import { saveRole } from './functions'
+import { parsePermissions, saveRole } from './functions'
 
 
 export default function CreateRole({open, edit, version}) {
@@ -30,11 +30,11 @@ export default function CreateRole({open, edit, version}) {
     const teamPerms= !edit ? Object.entries({...teamPermissions}) : Object.entries(edit.permissions.teamPermissions)
 
     //permissions - saved from users selections -> used to send to server
-    const [personalTaskFinal, setPersonalFinal] = useState({...personalTaskPermisssions})
-    const [ownDivFinal, setOwnDivFinal] = useState({...ownDivisionTaskPermissions})
-    const [allDivFinal, setAllDivFinal] = useState({...allDivisionsTaskPermissions})
-    const [teamFinal, setTeamFinal] = useState({...teamPermissions})
-    const [docsFinal, setDocsFinal] = useState({...documentPermissions})
+    const [docsFinal, setDocsFinal] = useState(parsePermissions(docsPermissions))
+    const [personalTaskFinal, setPersonalFinal] = useState(parsePermissions(personalTasks))
+    const [ownDivFinal, setOwnDivFinal] = useState(parsePermissions(ownDivisionTasks))
+    const [allDivFinal, setAllDivFinal] = useState(parsePermissions(allDivisionTasks))
+    const [teamFinal, setTeamFinal] = useState(parsePermissions(teamPerms))
 
     //if editing role, need a checkbox to set overwrite situation
     const [overwrite, setOverwrite] = useState(false)
@@ -59,6 +59,7 @@ export default function CreateRole({open, edit, version}) {
             teamPermissions : teamFinal,
             documentPermissions : docsFinal
         }
+        console.log("type of permsisions -> ", rolePermissions)
         const data  = {
             roleName : roleName,
             roleDescription : roleDescription,

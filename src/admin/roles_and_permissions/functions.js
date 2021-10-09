@@ -4,6 +4,16 @@ import { USER_STORAGE_KEY } from "../../app_data/constants";
 import { getConfig, getTokenFromStorage } from "../../utility/functions";
 
 
+//change the permissions array so that its {PermissionGroup :
+export function parsePermissions(permissions){
+    const x = permissions.map((p)=>{
+        return Object.fromEntries(new Map([
+            [p[0], p[1].value]
+        ]))
+    })
+    return x
+}
+
 export async function getRoles(){
     const config = getConfig(USER_STORAGE_KEY)
     if(!config){

@@ -1,10 +1,11 @@
 import {  Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import React, { useState } from 'react'
+import { parsePermissions } from './functions'
 
 export default function PermissionSet({permissionGroup, setPermissionGroup, name, open}) {
 
     const [permissions, setPermissions] = useState(permissionGroup)
-    
+        
     function handleChange(event){
         const newPermissions = [...permissions]
         const permissionObject = permissions.filter((per)=>per[0]===event.target.id)
@@ -13,13 +14,11 @@ export default function PermissionSet({permissionGroup, setPermissionGroup, name
         newPermissions.splice(indexOfPermission, 1, permissionObject[0])
         setPermissions(newPermissions)
     }
-
     
     //have to change this setGroupPermission(permissions) and handle new one from parent component
     function handleSaveTaskPerms(){
-        const sendBack = Object.fromEntries(permissions)
+        const sendBack = parsePermissions(permissions)
         setPermissionGroup(sendBack)
-        console.log(`Permssions saved for ${name}= `, sendBack )
         open(false)
     }
 

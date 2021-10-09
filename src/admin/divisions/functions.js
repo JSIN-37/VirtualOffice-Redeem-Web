@@ -12,7 +12,6 @@ export async function getDivisions(){
     return new Promise(function (resolve, reject){
         axios.get(get_divisions_url, config)
         .then((response)=>{
-            console.log("get divisions response ",response)
             if(response.status===200){
                 resolve(response.data)
             }else{

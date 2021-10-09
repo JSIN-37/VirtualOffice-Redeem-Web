@@ -11,7 +11,6 @@ export function getUsers(){
     return new Promise( function (resolve, reject){
         axios.get(get_users_url, config)
         .then((response)=>{
-        console.log('get users response ',response)
         if(response.status===200){
             resolve(response.data)
         }

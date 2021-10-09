@@ -70,14 +70,14 @@ export default function ViewUsers() {
             )
         })}
         
-        {searchUserDB && <SearchUser setSearchUserDB={setSearchUserDB}/>}
+        {searchUserDB && <SearchUser setSearchUserDB={setSearchUserDB} divisions={divisions} roles={roles}/>}
 
         </>
     )
 }
 
 
-export const SearchUser = ({setSearchUserDB}) =>{
+export const SearchUser = ({setSearchUserDB, divisions, roles}) =>{
     const [divisionID, setDivisionID ] = useState('')
     const [roleID, setRoleID]= useState('')
     const [name, setName]= useState('')
@@ -124,9 +124,7 @@ export const SearchUser = ({setSearchUserDB}) =>{
             <h1>Results</h1>
             {searchResults.length >0 && searchResults.map((user)=>{
                 return (
-                    <div key={user.id}>
-                        {`${JSON.stringify(user)}`}
-                    </div>
+                    <UserCard key={user.id} user={user} division={divisions.filter((d)=>d.id===user.DivisionId)} role={roles.filter((r)=>r.id===user.RoleId)}/>
                 )
             })}
         </>

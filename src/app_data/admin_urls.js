@@ -40,6 +40,8 @@ export const get_users_url = `${BACKEND_URL}/admin/users`
 //create user
 export const create_user_url=`${BACKEND_URL}/admin/user`
 
+//update user
+export const update_user_url = `${BACKEND_URL}/admin/user`
 
 //get roles
 export const get_roles_url = `${BACKEND_URL}/admin/roles`

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { get_users_url } from "../../app_data/admin_urls";
+import { create_user_url, get_users_url } from "../../app_data/admin_urls";
 import { USER_STORAGE_KEY } from "../../app_data/constants";
 import { getConfig, getTokenFromStorage } from "../../utility/functions";
 
@@ -37,4 +37,28 @@ export async function searchUser(searchParams){
     catch{
         console.log('error fetching user')
     }
+}
+
+export async function createEmployee(data){
+    const config = getConfig(USER_STORAGE_KEY)
+    if(!config){
+        alert('Token invalid.')
+        return false
+    }
+    return new Promise(function(resolve,reject){
+        axios.post(create_user_url, data, config)
+        .then((response)=>{
+            console.log("create user response ->",response)
+            if(response.status===200){
+                resolve(true)
+            }else{
+                reject(false)
+            }
+        })
+        .catch((e)=>{
+            console.log('error creating user -> ',e)
+            return false
+        })
+    })
+
 }

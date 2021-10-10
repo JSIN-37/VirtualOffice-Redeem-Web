@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import LoadingScreen from '../../utility/LoadingScreen'
 import PasswordChange from './PasswordChange'
 
 export default function InitialSetup() {

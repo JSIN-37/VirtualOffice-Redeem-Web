@@ -43,21 +43,16 @@ export default function Login(props) {
         setLoading(true)
         try{
             const res = await logIn(url, credentials)
+            const user = res
             if(props.admin){
-                console.log("login page, handle login func, result -> ", (res))
-                const user = res
                 setUserToStorage(USER_STORAGE_KEY, user)
                 window.location.assign(destination)
             }
             if(props.employee){
-                alert('check console')
-                console.log('log in page, employee response ',res.user.needsSetup)
                 if(res.user.needsSetup === 1){
-                    const user = res
                     setUserToStorage(USER_STORAGE_KEY, user)
                     window.location.assign('/employee/initial-login')
                 }else{
-                    const user = res
                     setUserToStorage(USER_STORAGE_KEY, user)
                     window.location.assign(destination)
                 }

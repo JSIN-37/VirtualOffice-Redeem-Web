@@ -22,8 +22,12 @@ export function getTokenFromStorage(storage_key){
     }
 }
 
-export function setUserToStorage(storage_key, token){
+export function setTokenToStorage(storage_key, token){
     localStorage.setItem(storage_key, JSON.stringify(token))
+}
+
+export function setUserToStorage(storage_key, user){
+    localStorage.setItem(storage_key, JSON.stringify(user))
 }
 
 

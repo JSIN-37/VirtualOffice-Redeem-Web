@@ -1,20 +1,61 @@
-import React from 'react'
-import Login from '../login/Login'
+import React, { useEffect, useState } from 'react'
+import { Redirect, Route } from 'react-router'
+import { USER_STORAGE_KEY } from '../app_data/constants'
+import { employee_validate_url } from '../app_data/employee_urls'
+import Dashboard from '../employee/Dashboard'
+import EditProfile from '../employee/profile/EditProfile'
+import InitialSetup from '../employee/setup/InitialSetup'
+import { isAuthenticated } from '../utility/functions'
+import LoadingScreen from '../utility/LoadingScreen'
 
 
 export default function EmployeeArea() {
     
-    const signedIn = true//replace with sign in function
-    //const history = useHistory()
+    const [loading, setLoading] = useState(false)
+    const [redirect, setRedirect] = useState(null)
+
+    useEffect(()=>{
+        checkToken()
+        async function checkToken(){
+            setLoading(true)
+            try{
+                const auth = await isAuthenticated(employee_validate_url,USER_STORAGE_KEY)
+                if(auth){
+                    setRedirect(false)
+                    setLoading(false)
+                  }else{
+                    setRedirect(true)
+                  }
+            }
+            catch{
+                console.log("error checking token")
+                localStorage.removeItem(USER_STORAGE_KEY)
+                setRedirect(true)
+            }
+        }
+    }, [])
+
+    if(redirect){
+        return <Redirect push to="/employee/login" />
+    }
 
     return (
         <>
-            {signedIn && (
-                <div>
-                    <h1>Employee Area</h1>
-                </div>
+            {!loading && (
+                <>
+                    <Route exact path='/employee'>
+                        <Dashboard />
+                    </Route>
+                    <Route exact path='/employee/initial-login'>
+                        <InitialSetup />
+                    </Route>
+                    <Route exact path='/employee/profile'>
+                        <EditProfile />
+                    </Route>
+                    
+                </>
             )}
-            {!signedIn && <Login employee />}
+            {loading && <LoadingScreen message='Loading...' />}
         </>
     )
 }

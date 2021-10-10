@@ -3,6 +3,7 @@ import { Redirect, Route } from 'react-router'
 import { USER_STORAGE_KEY } from '../app_data/constants'
 import { employee_validate_url } from '../app_data/employee_urls'
 import Dashboard from '../employee/Dashboard'
+import EditProfile from '../employee/profile/EditProfile'
 import InitialSetup from '../employee/setup/InitialSetup'
 import { isAuthenticated } from '../utility/functions'
 import LoadingScreen from '../utility/LoadingScreen'
@@ -42,12 +43,16 @@ export default function EmployeeArea() {
         <>
             {!loading && (
                 <>
-                    <Route exact path='/employee/'>
+                    <Route exact path='/employee'>
                         <Dashboard />
                     </Route>
                     <Route exact path='/employee/initial-login'>
                         <InitialSetup />
                     </Route>
+                    <Route exact path='/employee/profile'>
+                        <EditProfile />
+                    </Route>
+                    
                 </>
             )}
             {loading && <LoadingScreen message='Loading...' />}

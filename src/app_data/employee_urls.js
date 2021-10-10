@@ -3,6 +3,9 @@ import {BACKEND_URL} from './constants'
 //////////////////log in////////////////////////////////////////// 
 export const employee_login_url = `${BACKEND_URL}/user/login`
 
+//get profile
+export const employee_get_profile = `${BACKEND_URL}/user/profile`
+
 //////////////////validating token/////////////////////
 export const employee_validate_url = `${BACKEND_URL}/user/validate-token` 
 

@@ -5,7 +5,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import logo from "../../img/logo.png"
 import { makeStyles } from '@mui/styles';
-import { setUserToStorage } from '../../utility/functions';
+import { setTokenToStorage } from '../../utility/functions';
 import { USER_STORAGE_KEY } from '../../app_data/constants';
 import { admin_login_url } from '../../app_data/admin_urls';
 
@@ -46,7 +46,7 @@ export default function AdminInitialLogin({setSignedIn}) {
             .then((res) => {
                 if (res.data.token !== '') {
                     const user = { token : res.data.token}
-                    setUserToStorage(USER_STORAGE_KEY, user)
+                    setTokenToStorage(USER_STORAGE_KEY, user)
                     setSignedIn(true)
                 }
             })

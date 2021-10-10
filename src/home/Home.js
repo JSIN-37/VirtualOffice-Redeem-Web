@@ -56,7 +56,7 @@ export default function Home() {
         <Route path="/admin">
             <AdminArea />
         </Route>
-        <Route exact path="/employee">
+        <Route path="/employee">
           <EmployeeArea />
         </Route>
 

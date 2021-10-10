@@ -39,29 +39,29 @@ export default function Login(props) {
         })
     }
 
-    // async function adminLogin(){
-    //     const credentials = {password : password, rememberMe:true}
-    //     try{ 
-    //         const res = await logIn(admin_login_url, credentials)
-    //         console.log("login page, res ",res)
-    //         //const user = {token : res}
-    //         const user = {token : res.token}
-    //         setUserToStorage(USER_STORAGE_KEY, user)
-    //         window.location.assign(`http://localhost:3000/admin`) //find a better way
-    //         } 
-    //     catch{
-    //         console.log("error logging in")
-    //     }
-    // }
-
     async function handleLogIn(url, credentials, destination){
         setLoading(true)
         try{
             const res = await logIn(url, credentials)
-            console.log("login page, handle login func, result -> ", (res))
-            const user = res
-            setUserToStorage(USER_STORAGE_KEY, user)
-            window.location.assign(destination)
+            if(props.admin){
+                console.log("login page, handle login func, result -> ", (res))
+                const user = res
+                setUserToStorage(USER_STORAGE_KEY, user)
+                window.location.assign(destination)
+            }
+            if(props.employee){
+                alert('check console')
+                console.log('log in page, employee response ',res.user.needsSetup)
+                if(res.user.needsSetup === 1){
+                    const user = res
+                    setUserToStorage(USER_STORAGE_KEY, user)
+                    window.location.assign('/employee/initial-login')
+                }else{
+                    const user = res
+                    setUserToStorage(USER_STORAGE_KEY, user)
+                    window.location.assign(destination)
+                }
+            }
         }
         catch{
             console.log("error logging IN ")
@@ -77,13 +77,15 @@ export default function Login(props) {
             }
             handleLogIn(admin_login_url, credentials, `http://localhost:3000/admin` )
             return
-        }else{
+        }
+        if(props.employee){
             const credentials = {
                 email : email,
                 password : password,
                 rememberMe : true
             }
-            handleLogIn(employee_login_url, credentials, `http://localhost:3000/employee`)
+            handleLogIn(employee_login_url, credentials, `http://localhost:3000/employee` )
+
         }
 
     }

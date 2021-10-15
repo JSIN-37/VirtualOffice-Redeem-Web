@@ -9,21 +9,37 @@ import React, { useState } from 'react'
 export default function MyAutocomplete({options}) {
     //console.log('options in autocomplete compponent -> ', options)
 
+    const [showList, setShowList] = useState(false)
     const [input, setInput] = useState('')
     const [filterings, setFilterings] = useState(options)
 
     function userInput(input){
-        setInput(input)
-        //const newFilterings = filterings.filter((op)=>op.label.includes(input))
+        const newVal = input.target.value
+        console.log("new va",newVal)
+        setInput(newVal)
+        if(input.nativeEvent.inputType==='deleteContentBackward'){
+            resetFilterings(input.target.value)
+        }else{
         setFilterings((old)=>{
-            return old.filter((op)=>op.label.includes(input))
+            return old.filter((op)=>op.label.toLowerCase().includes(newVal.toLowerCase()))
         })
+        }
+    }
+
+    function resetFilterings(text){
+        const newFilterings = options.filter((op)=>op.label.toLowerCase().includes(text.toLowerCase()))
+        setFilterings(newFilterings)
+    }
+
+    function leavingAutocomplete(){
+        setShowList(false)
+        setInput('')
     }
 
     return (
         <>
-        <input type='text' placeholder={'Type Div Name'} value={input} onChange={(e)=>{userInput(e.target.value)}} />
-        <SuggestionsList suggestions={filterings} />
+        <input type='text' placeholder={'Type Div Name'} value={input} onChange={(e)=>{userInput(e)}} onFocus={()=>{setShowList(true)}} onBlur={leavingAutocomplete} />
+        {showList && <SuggestionsList suggestions={filterings} />}
         </>
     )
 }

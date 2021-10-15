@@ -1,11 +1,11 @@
-import { Autocomplete, TextField, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import LoadingScreen from '../../utility/LoadingScreen'
 import { getDivisions } from '../divisions/functions'
 import { getRoles } from '../roles_and_permissions/functions'
 import { updateEmployee } from './functions'
 import UserPermissionsView from './UserPermissionsView'
-
+import Autocomplete from '../../utility/components/autocomplete/Autocomplete'
 export default function UserCard({user, division, role}) {
     const [moreDetails, setMoreDetails] = useState(false)
     const [changeRole, setChangeRole] = useState(false)
@@ -88,7 +88,9 @@ export const ChangeRole = ({currentRole, open, update, modified}) =>{
 
     const [roleOptions, setRoleOptions] = useState([])
     const[loading, setLoading] = useState(true)
-
+    const [newRole, setNewRole] = useState(null)
+    //for autocomplete
+    const options = roleOptions.map((option)=>{return {id:option.id, label:option.name}})
     useEffect(()=>{
         fetchRoles()
         async function fetchRoles(){
@@ -114,8 +116,9 @@ export const ChangeRole = ({currentRole, open, update, modified}) =>{
         })
     }, [])
 
-    function handleSave(event, value){
-        update('role', value.id)
+    function handleSave(){
+        update('role', newRole.id)
+        open(false)
         modified(true)
     }
 
@@ -126,13 +129,8 @@ export const ChangeRole = ({currentRole, open, update, modified}) =>{
     return(
         <>
             <h3>Current Role : {currentRole}</h3>
-            <Autocomplete options={roleOptions} getOptionLabel={option=>option.name} 
-            renderInput={(params) => (
-                <TextField {...params} label="Select New Role" />
-              )}
-            onChange={handleSave}
-              />
-            <button onClick={()=>{open(false)}}>Save</button>
+            <Autocomplete options={options} result={setNewRole}/>
+            {newRole && <button onClick={handleSave}>Save</button>}
         </>
     )
 }
@@ -141,7 +139,8 @@ export const ChangeRole = ({currentRole, open, update, modified}) =>{
 export const ChangeDivision = ({currentDivision, open, update, modified}) =>{
     const[divisionOptions, setDivisionOptions] = useState([])
     const[loading, setLoading] = useState(true)
-
+    const [newDivision, setNewDivision] = useState(null)
+    const options = divisionOptions.map((div)=>{return {id:div.id, label:div.name}})
     useEffect(()=>{
         fetchDivisions()
         async function fetchDivisions(){
@@ -167,10 +166,12 @@ export const ChangeDivision = ({currentDivision, open, update, modified}) =>{
         })
     }, [])
 
-    function handleSave(event, value){
-        update('division', value.id)
+    function handleSave(){
+        update('division', newDivision.id)
+        open(false)
         modified(true)
     }
+
 
     if(loading){
         return <LoadingScreen message='Loading Options' />
@@ -179,13 +180,8 @@ export const ChangeDivision = ({currentDivision, open, update, modified}) =>{
     return(
         <>
         <h3>Current Division : {currentDivision}</h3>
-        <Autocomplete options={divisionOptions} getOptionLabel={(option)=>option.name}
-        renderInput={(params) => (
-            <TextField {...params} label="Select new Division" />
-          )}
-          onChange={handleSave}
-          />
-          <button onClick={()=>{open(false)}}>Save</button>
+        <Autocomplete options={options} result={setNewDivision}/>
+        {newDivision && <button onClick={handleSave}>Save</button>}
         </>
     )
 }

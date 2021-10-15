@@ -1,8 +1,8 @@
-import { Autocomplete,  TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import InputField from "../other/InputField";
 import { addDivision, deleteDivision, getDivisions, updateDivision } from "./functions";
-
+import Autocomplete from "../../utility/components/autocomplete/Autocomplete";
+import LoadingScreen from "../../utility/LoadingScreen";
 export default function ViewDivisions() {
   const [divisions, setDivisions] = useState([]);
   //haha
@@ -14,6 +14,7 @@ export default function ViewDivisions() {
   const [divisionID, setDivisionID] = useState("");
 
   //show / hide components
+  const [loading, setLoading] = useState(true)
   const [renderAddDivision, setRenderAddDivision] = useState(false);
   const [renderEditDivision, setRenderEditDivision] = useState(false);
 
@@ -22,9 +23,12 @@ export default function ViewDivisions() {
     async function fetchDivisions(){
       const divisions = await getDivisions()
       if(!divisions){
+        alert("failed to load divisions!")
+        setLoading(false)
         return
       }else{
         setDivisions(divisions)
+        setLoading(false)
       }
     }
     return () => {
@@ -82,24 +86,26 @@ export default function ViewDivisions() {
     }
   }
 
-  function logValue(event,value){
-    setOneDivision(value)
+  function handleResult(divisionOption){
+    if(divisionOption===null){
+      setOneDivision(false)
+    }else{
+      const division = divisions.filter((div)=>div.id===divisionOption.id)
+      setOneDivision(division[0])
+    }
   }
+  
 
+  const x = divisions.map((div)=>{return {id:div.id, label:div.name}})
+
+  if(loading){
+    return <LoadingScreen message={'Getting divisions...'}/>
+  }
   return (
     <>
       <div>
         <h1>View divisions</h1>
-
-        <Autocomplete
-          options={divisions}
-          getOptionLabel={(option) => option.name}
-          renderInput={(params) => (
-            <TextField {...params} label="Division Name" />
-          )}
-          onChange={logValue}
-        />
-        <br />
+        <Autocomplete options={x} result={handleResult}/>
         <br />
         <br />
       </div>

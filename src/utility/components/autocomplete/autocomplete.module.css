@@ -1,0 +1,10 @@
+.suggestion{
+    width: 500px;
+    cursor: pointer;
+    background-color: aliceblue;
+    
+}
+
+.suggestion:hover{
+    background-color: beige;
+}

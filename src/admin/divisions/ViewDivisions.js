@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputField from "../other/InputField";
 import { addDivision, deleteDivision, getDivisions, updateDivision } from "./functions";
-import MyAutocomplete from "../../utility/components/autocomplete/Autocomplete";
+import Autocomplete from "../../utility/components/autocomplete/Autocomplete";
 import LoadingScreen from "../../utility/LoadingScreen";
 export default function ViewDivisions() {
   const [divisions, setDivisions] = useState([]);
@@ -105,7 +105,7 @@ export default function ViewDivisions() {
     <>
       <div>
         <h1>View divisions</h1>
-        <MyAutocomplete options={x} result={handleResult}/>
+        <Autocomplete options={x} result={handleResult}/>
         <br />
         <br />
       </div>

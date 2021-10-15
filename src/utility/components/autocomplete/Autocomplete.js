@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './autocomplete.module.css'
 
-export default function MyAutocomplete({options, result}) {
+export default function Autocomplete({options, result}) {
 
     //TODO - remove in build
     if(!options || !result){

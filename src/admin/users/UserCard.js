@@ -1,11 +1,11 @@
-import { Autocomplete, TextField, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import LoadingScreen from '../../utility/LoadingScreen'
 import { getDivisions } from '../divisions/functions'
 import { getRoles } from '../roles_and_permissions/functions'
 import { updateEmployee } from './functions'
 import UserPermissionsView from './UserPermissionsView'
-import MyAutocomplete from '../../utility/components/autocomplete/Autocomplete'
+import Autocomplete from '../../utility/components/autocomplete/Autocomplete'
 export default function UserCard({user, division, role}) {
     const [moreDetails, setMoreDetails] = useState(false)
     const [changeRole, setChangeRole] = useState(false)
@@ -129,7 +129,7 @@ export const ChangeRole = ({currentRole, open, update, modified}) =>{
     return(
         <>
             <h3>Current Role : {currentRole}</h3>
-            <MyAutocomplete options={options} result={setNewRole}/>
+            <Autocomplete options={options} result={setNewRole}/>
             {newRole && <button onClick={handleSave}>Save</button>}
         </>
     )
@@ -180,7 +180,7 @@ export const ChangeDivision = ({currentDivision, open, update, modified}) =>{
     return(
         <>
         <h3>Current Division : {currentDivision}</h3>
-        <MyAutocomplete options={options} result={setNewDivision}/>
+        <Autocomplete options={options} result={setNewDivision}/>
         {newDivision && <button onClick={handleSave}>Save</button>}
         </>
     )

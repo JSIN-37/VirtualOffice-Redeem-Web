@@ -1,38 +1,62 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { get_users_url } from '../../app_data/admin_urls'
-import { USER_STORAGE_KEY } from '../../app_data/constants'
-import { getConfig } from '../../utility/functions'
+import LoadingScreen from '../../utility/LoadingScreen'
+import { getDivisions } from '../divisions/functions'
 import InputField from '../other/InputField'
-import { searchUser } from './functions'
+import { getRoles } from '../roles_and_permissions/functions'
+import { getUsers, searchUser } from './functions'
+import UserCard from './UserCard'
 
 export default function ViewUsers() {
     const [users, setUsers] = useState([])
-
+    const [divisions, setDivisions] = useState([])
+    const [roles, setRoles] = useState([])
 
     //render components based on this.
-    const[searchUserDB, setSearchUserDB] = useState(false)
-
+    const   [searchUserDB, setSearchUserDB] = useState(false)
+    const   [loading, setLoading] = useState(true)
 
     useEffect(()=>{
-        const config = getConfig(USER_STORAGE_KEY)
-        if(!config) return
-        axios.get(get_users_url, config)
-        .then((response)=>{
-            setUsers(response.data)
-        })
-        .catch((er)=>{
-            console.log('error getting users ',er)
-        })
+        fetchData()
+        async function fetchData(){
+            try{
+                const users = await getUsers()
+                const divisions = await getDivisions()
+                const roles = await getRoles()
+                if(users){
+                    setUsers(users)
+                }
+                if(divisions){
+                    setDivisions(divisions)
+                }
+                if(roles){
+                    setRoles(roles)
+                }
+                setLoading(false)
+                return
+            }
+            catch(e){
+                console.log("error fetching data -> ",e)
+                setLoading(false)
+                return
+            }
+        }
 
         return ()=>{
             setUsers([])
+            setDivisions([])
+            setRoles([])
         }
     },[])
 
     function tester(){
         setSearchUserDB(true)
     }
+
+    if(loading){
+        return <LoadingScreen message='loading...'/>
+    }
+
+
     return (
         <>
         <div>
@@ -42,22 +66,18 @@ export default function ViewUsers() {
 
         {users.length>0 && users.map((user)=>{
             return (
-                //REPLACE THIS WITH CARD? 
-                <div key={user.id}>
-                    {`${JSON.stringify(user)}`}
-                    <br/><br/><br/><br/>
-                </div>
+                <UserCard key={user.id} user={user} division={divisions.filter((d)=>d.id===user.DivisionId)} role={roles.filter((r)=>r.id===user.RoleId)}/>
             )
         })}
         
-        {searchUserDB && <SearchUser setSearchUserDB={setSearchUserDB}/>}
+        {searchUserDB && <SearchUser setSearchUserDB={setSearchUserDB} divisions={divisions} roles={roles}/>}
 
         </>
     )
 }
 
 
-export const SearchUser = ({setSearchUserDB}) =>{
+export const SearchUser = ({setSearchUserDB, divisions, roles}) =>{
     const [divisionID, setDivisionID ] = useState('')
     const [roleID, setRoleID]= useState('')
     const [name, setName]= useState('')
@@ -104,9 +124,7 @@ export const SearchUser = ({setSearchUserDB}) =>{
             <h1>Results</h1>
             {searchResults.length >0 && searchResults.map((user)=>{
                 return (
-                    <div key={user.id}>
-                        {`${JSON.stringify(user)}`}
-                    </div>
+                    <UserCard key={user.id} user={user} division={divisions.filter((d)=>d.id===user.DivisionId)} role={roles.filter((r)=>r.id===user.RoleId)}/>
                 )
             })}
         </>

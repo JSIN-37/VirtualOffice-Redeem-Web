@@ -1,31 +1,46 @@
 import Home from "./home/Home";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 
-const theme = createTheme({
-    typography: {
-        fontFamily: [
-            'mulish',
-            'Open Sans',
-            'sans-serif',
-        ].join(','),
-        button: {
-            textTransform: 'capitalize',
+const theme = extendTheme({
+    colors: {
+        brand: {
+            100: "#E3DBF9",
+            500: "#4E29B2",
+            900: "#391795",
+        },
+        fonts: {
+            body: "mulish, sans-serif",
+            heading: "mulish, sans-serif",
+            mono: "Menlo, monospace",
         },
     },
-    palette: {
-        primary: {
-            main: '#4E29B2',
-            light: '#E3DBF9',
-            dark: '#391795',
-        }
-    },
-});
+})
+// const theme = createTheme({
+//     typography: {
+//         fontFamily: [
+//             'mulish',
+//             'Open Sans',
+//             'sans-serif',
+//         ].join(','),
+//         button: {
+//             textTransform: 'capitalize',
+//         },
+//     },
+//     palette: {
+//         primary: {
+//             main: '#4E29B2',
+//             light: '#E3DBF9',
+//             dark: '#391795',
+//         }
+//     },
+// });
 
 const App = () => {
     return (
-        <ThemeProvider theme={theme}>
+        <ChakraProvider theme={theme}>
             <Home />
-        </ThemeProvider>
+        </ChakraProvider>
     );
 };
 

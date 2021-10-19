@@ -46,11 +46,11 @@ export default function CreateUser() {
     }, []);
 
     //save values from dropdown menu
-    function selectDivision(event, value) {
-        setSelectedDivision(value);
+    function selectDivision(div) {
+        setSelectedDivision(div);
     }
-    function selectRole(event, value) {
-        setSelectedRole(value);
+    function selectRole(role) {
+        setSelectedRole(role);
     }
 
     //validate input email 
@@ -123,6 +123,9 @@ export default function CreateUser() {
         return <LoadingScreen message="creating new user..." />;
     }
 
+    const divs = divisionOptions.map((div)=>{return {id:div.id, label:div.name}})
+    const roles = roleOptions.map((role)=>{return {id:role.id, label:role.name}})
+
     return (
         <div>
             <h1>Create User</h1>
@@ -139,20 +142,12 @@ export default function CreateUser() {
                 placeholder="Email"
             />
             <Autocomplete
-                options={divisionOptions}
-                getOptionLabel={(option) => option.name}
-                renderInput={(params) => (
-                    <Input {...params} label={"Select Division"} />
-                )}
-                onChange={selectDivision}
+                options={divs}
+                result={selectDivision}
             />
             <Autocomplete
-                options={roleOptions}
-                getOptionLabel={(option) => option.name}
-                renderInput={(params) => (
-                    <Input {...params} label={"Select Role"} />
-                )}
-                onChange={selectRole}
+                options={roles}
+                result={selectRole}
             />
             <button onClick={createUser}>Create</button>
         </div>

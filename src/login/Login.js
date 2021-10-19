@@ -117,6 +117,7 @@ export default function Login(props) {
                         id="email-input"
                         isFullWidth
                         pr="4.5rem"
+                        focusBorderColor="purple"
                         type='email'
                         placeholder='Email'
                         value={email}
@@ -129,6 +130,7 @@ export default function Login(props) {
                         id="password-input"
                         isFullWidth
                         pr="4.5rem"
+                        focusBorderColor="purple"
                         mb="1rem"
                         type={show ? "text" : "password"}
                         placeholder="Enter password"

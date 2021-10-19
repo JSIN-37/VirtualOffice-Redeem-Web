@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Center, Text, Button } from "@chakra-ui/react"
 import LoadingScreen from '../../utility/LoadingScreen'
 import { getDivisions } from '../divisions/functions'
 import InputField from '../other/InputField'
@@ -12,119 +13,119 @@ export default function ViewUsers() {
     const [roles, setRoles] = useState([])
 
     //render components based on this.
-    const   [searchUserDB, setSearchUserDB] = useState(false)
-    const   [loading, setLoading] = useState(true)
+    const [searchUserDB, setSearchUserDB] = useState(false)
+    const [loading, setLoading] = useState(true)
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchData()
-        async function fetchData(){
-            try{
+        async function fetchData() {
+            try {
                 const users = await getUsers()
                 const divisions = await getDivisions()
                 const roles = await getRoles()
-                if(users){
+                if (users) {
                     setUsers(users)
                 }
-                if(divisions){
+                if (divisions) {
                     setDivisions(divisions)
                 }
-                if(roles){
+                if (roles) {
                     setRoles(roles)
                 }
                 setLoading(false)
                 return
             }
-            catch(e){
-                console.log("error fetching data -> ",e)
+            catch (e) {
+                console.log("error fetching data -> ", e)
                 setLoading(false)
                 return
             }
         }
 
-        return ()=>{
+        return () => {
             setUsers([])
             setDivisions([])
             setRoles([])
         }
-    },[])
+    }, [])
 
-    function tester(){
+    function tester() {
         setSearchUserDB(true)
     }
 
-    if(loading){
-        return <LoadingScreen message='loading...'/>
+    if (loading) {
+        return <LoadingScreen message='loading...' />
     }
 
 
     return (
         <>
-        <div>
-            <h1>View Users</h1>
-            <button onClick={tester}>Search Database</button>
-        </div>
+            <Center>
+                <Text fontSize="lg" m={2} > View Users </Text>
+                <Button colorScheme="purple" variant="solid" m={2} onClick={tester}>Search Database</Button>
+            </Center>
 
-        {users.length>0 && users.map((user)=>{
-            return (
-                <UserCard key={user.id} user={user} division={divisions.filter((d)=>d.id===user.DivisionId)} role={roles.filter((r)=>r.id===user.RoleId)}/>
-            )
-        })}
-        
-        {searchUserDB && <SearchUser setSearchUserDB={setSearchUserDB} divisions={divisions} roles={roles}/>}
+            {users.length > 0 && users.map((user) => {
+                return (
+                    <UserCard key={user.id} user={user} division={divisions.filter((d) => d.id === user.DivisionId)} role={roles.filter((r) => r.id === user.RoleId)} />
+                )
+            })}
+
+            {searchUserDB && <SearchUser setSearchUserDB={setSearchUserDB} divisions={divisions} roles={roles} />}
 
         </>
     )
 }
 
 
-export const SearchUser = ({setSearchUserDB, divisions, roles}) =>{
-    const [divisionID, setDivisionID ] = useState('')
-    const [roleID, setRoleID]= useState('')
-    const [name, setName]= useState('')
-    const [email, setEmail]= useState('')
+export const SearchUser = ({ setSearchUserDB, divisions, roles }) => {
+    const [divisionID, setDivisionID] = useState('')
+    const [roleID, setRoleID] = useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
     const [searchResults, setSearchResults] = useState([])
 
     //create query parameters and call search from server
-    async function handleSearchButton(){
+    async function handleSearchButton() {
         const params = {}
-        if(divisionID!==''){
-            const division =  {divisionId : divisionID}
+        if (divisionID !== '') {
+            const division = { divisionId: divisionID }
             Object.assign(params, division)
         }
-        if(roleID !== ''){
-            const role = {roleId : roleID}
+        if (roleID !== '') {
+            const role = { roleId: roleID }
             Object.assign(params, role)
         }
-        if(name!==''){
-            const searchName = {nameLike : name}
+        if (name !== '') {
+            const searchName = { nameLike: name }
             Object.assign(params, searchName)
         }
-        if(email!==''){
-            const searchEmail = {emailLike : email}
+        if (email !== '') {
+            const searchEmail = { emailLike: email }
             Object.assign(params, searchEmail)
         }
 
-        const res =  await searchUser(params)
-        console.log('xxx',res)
-        if(res.data.length===0){
+        const res = await searchUser(params)
+        console.log('xxx', res)
+        if (res.data.length === 0) {
             alert('not found.')
         }
         setSearchResults(res.data)
     }
 
 
-    return(
+    return (
         <>
             <InputField type={`text`} placeholder={`divisionID`} input={divisionID} setInput={setDivisionID} />
             <InputField type={`text`} placeholder={`RoleID`} input={roleID} setInput={setRoleID} />
             <InputField type={`text`} placeholder={`name`} input={name} setInput={setName} />
             <InputField type={`text`} placeholder={`email`} input={email} setInput={setEmail} />
-            <button onClick={handleSearchButton}>Search Database</button>
-            <button onClick={()=>{setSearchUserDB(false)}}>Close Search Field</button>
-            <h1>Results</h1>
-            {searchResults.length >0 && searchResults.map((user)=>{
+            <Button colorScheme="purple" variant="solid" m={2} onClick={handleSearchButton}>Search Database</Button>
+            <Button colorScheme="purple" variant="solid" m={2} onClick={() => { setSearchUserDB(false) }}>Close Search Field</Button>
+            <Text fontSize="lg" m={2} > Results </Text>
+            {searchResults.length > 0 && searchResults.map((user) => {
                 return (
-                    <UserCard key={user.id} user={user} division={divisions.filter((d)=>d.id===user.DivisionId)} role={roles.filter((r)=>r.id===user.RoleId)}/>
+                    <UserCard key={user.id} user={user} division={divisions.filter((d) => d.id === user.DivisionId)} role={roles.filter((r) => r.id === user.RoleId)} />
                 )
             })}
         </>

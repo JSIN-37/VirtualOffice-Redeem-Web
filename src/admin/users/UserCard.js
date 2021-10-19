@@ -1,5 +1,5 @@
-import { Text } from "@chakra-ui/react"
 import React, { useEffect, useState } from 'react'
+import { Text, Button } from "@chakra-ui/react"
 import LoadingScreen from '../../utility/LoadingScreen'
 import { getDivisions } from '../divisions/functions'
 import { getRoles } from '../roles_and_permissions/functions'
@@ -70,14 +70,14 @@ export default function UserCard({ user, division, role }) {
             <Text>{`Email: ${user.email}`}</Text>
             <Text>{`Division : ${division[0].name}`}</Text>
             <Text>{`Role : ${role[0].name}`}</Text>
-            <button onClick={() => setChangeRole(true)}>Change Role</button>
-            <button onClick={() => setChangeDivision(true)}>Change Division</button>
+            <Button colorScheme="purple" variant="solid" m={2} onClick={() => setChangeRole(true)}>Change Role</Button>
+            <Button colorScheme="purple" variant="solid" m={2} onClick={() => setChangeDivision(true)}>Change Role</Button>
             {moreDetails && <UserPermissionsView permissions={user.permissions} open={setMoreDetails} />}
             {!moreDetails && <button onClick={(e) => { setMoreDetails(true) }}>More Details</button>}
             {modified && <button onClick={saveUpdates}>Update User</button>}
             {changeRole && <ChangeRole currentRole={role[0].name} open={setChangeRole} update={updateUser} modified={setModified} />}
             {changeDivision && <ChangeDivision currentDivision={division[0].name} open={setChangeDivision} update={updateUser} modified={setModified} />}
-            <button onClick={view}>View</button>
+            <Button colorScheme="purple" variant="solid" m={2} onClick={view}>View</Button>
             <br />
         </div>
     )

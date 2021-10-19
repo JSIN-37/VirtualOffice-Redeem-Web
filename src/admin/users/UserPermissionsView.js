@@ -1,5 +1,5 @@
 import React from 'react'
-import { Center, Text, } from "@chakra-ui/react"
+import { Center, Text, Button } from "@chakra-ui/react"
 
 export default function UserPermissionsView({ permissions, open }) {
     return (
@@ -9,7 +9,7 @@ export default function UserPermissionsView({ permissions, open }) {
                     {JSON.stringify(permissions)}
                 </Text>
             </Center>
-            <button onClick={() => open(false)}>close</button>
+            <Button colorScheme="purple" variant="solid" m={2} onClick={() => open(false)}>Close</Button>
         </div>
     )
 }

@@ -53,6 +53,7 @@ export default function AdminInitialLogin({ setSignedIn }) {
                         id="password-input"
                         isFullWidth
                         pr="4.5rem"
+                        focusBorderColor="purple"
                         type={show ? "text" : "password"}
                         placeholder="Enter password"
                         value={password}

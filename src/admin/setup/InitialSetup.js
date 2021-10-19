@@ -1,4 +1,5 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
+import { Input, Button } from "@chakra-ui/react"
 import AdminPasswordChange from './AdminPasswordChange'
 
 export default function InitialSetup() {
@@ -11,89 +12,129 @@ export default function InitialSetup() {
     const [logo, setLogo] = useState(null)
 
     //what to send to server. set on clicking next button.
-    const [logoData, setLogoData ] = useState(null)
+    const [logoData, setLogoData] = useState(null)
     const [orgData, setOrgData] = useState(null)
-    
+
     // render change admin password if this is true
     const [dataSaved, setDataSaved] = useState(false)
 
-    function onFileSelect(event){
+    function onFileSelect(event) {
         let imageError = ''
         const image = event.target.files[0]
         console.log(image.type)
         const maxSize = 1000000
 
-        if(image.size > maxSize){
+        if (image.size > maxSize) {
             imageError += 'Please ensure file size less than 1MB.'
         }
 
         //if image has an error, do not save in state
-        if(imageError !== ''){
+        if (imageError !== '') {
             alert(`Image has the following issues; \n${imageError}`)
             return
         }
         setLogo(image)
     }
 
-    function handleSubmit(){
-        if(logo === null){
+    function handleSubmit() {
+        if (logo === null) {
             alert('no image is selected')
             return
         }
 
-        let infoError =''
+        let infoError = ''
 
-        if(orgName ===''){
+        if (orgName === '') {
             infoError += 'Organization Name is empty. Please Enter Name.\n'
         }
-        if(orgCountry===''){
-            infoError+='No country provided. Please provide country name.\n'
+        if (orgCountry === '') {
+            infoError += 'No country provided. Please provide country name.\n'
         }
-        if(orgContact===''){
-            infoError+='No contact number provided. Please provide one.\n'
+        if (orgContact === '') {
+            infoError += 'No contact number provided. Please provide one.\n'
         }
-        if(orgAddress===''){
-            infoError+='No address has been provided. Please provide organization address\n'
+        if (orgAddress === '') {
+            infoError += 'No address has been provided. Please provide organization address\n'
         }
 
-        if(infoError!==''){
+        if (infoError !== '') {
             alert(`${infoError}`)
             return
         }
-        
+
 
         //organization data to send to server.
         const organizationData = {
-            organizationName : orgName,
+            organizationName: orgName,
             organizationCountry: orgCountry,
-            organizationContactNumber : orgContact,
-            organizationAddress:orgAddress
+            organizationContactNumber: orgContact,
+            organizationAddress: orgAddress
         }
 
         //logo data to send to server.
         const imageData = new FormData()
-        imageData.append('file', logo )
+        imageData.append('file', logo)
 
         //store logo data and org data objects in state.
         setLogoData(imageData)
         setOrgData(organizationData)
-        setDataSaved(true) 
+        setDataSaved(true)
     }
 
     return (
         <>
-            {dataSaved===false && (
+            {dataSaved === false && (
                 <div>
-                <input type='text' id='organizationName' placeholder='Name' value={orgName} onChange={(e)=>setOrgName(e.target.value)}></input>
-                <input type='text' id='organizationCountry' placeholder='Country' value={orgCountry} onChange={(e)=>setOrgCountry(e.target.value)}></input>
-                <input type='text' id='organizationContactNumber' placeholder='Contact' value={orgContact} onChange={(e)=>setOrgContact(e.target.value)}></input>
-                <input type='text' id='organizationAddress' placeholder='Address' value={orgAddress} onChange={(e)=>setOrgAddress(e.target.value)}></input>
-                <input type='file' name='file' accept="image/jpeg" onChange={onFileSelect}></input>
-                <button onClick={handleSubmit}>Submit</button>
-            </div>
+                    <Input
+                        type='text'
+                        isFullWidth
+                        pr="4.5rem"
+                        focusBorderColor="purple"
+                        id='organizationName'
+                        placeholder='Name'
+                        value={orgName}
+                        onChange={(e) => setOrgName(e.target.value)}
+                    />
+                    <Input
+                        type='text'
+                        isFullWidth
+                        pr="4.5rem"
+                        focusBorderColor="purple"
+                        id='organizationCountry'
+                        placeholder='Country'
+                        value={orgCountry}
+                        onChange={(e) => setOrgCountry(e.target.value)}
+                    />
+                    <Input
+                        type='text'
+                        isFullWidth
+                        pr="4.5rem"
+                        focusBorderColor="purple"
+                        id='organizationContactNumber'
+                        placeholder='Contact' value={orgContact}
+                        onChange={(e) => setOrgContact(e.target.value)}
+                    />
+                    <Input
+                        type='text'
+                        isFullWidth
+                        pr="4.5rem"
+                        focusBorderColor="purple"
+                        id='organizationAddress'
+                        placeholder='Address'
+                        value={orgAddress}
+                        onChange={(e) => setOrgAddress(e.target.value)}
+                    />
+                    <Input
+                        type='file'
+                        name='file'
+                        accept="image/jpeg"
+                        onChange={onFileSelect}
+                    />
+                    <Button colorScheme="purple" variant="solid" m={2} onClick={handleSubmit}>Submit</Button>
+                </div>
             )}
 
-            {dataSaved === true && <AdminPasswordChange logo={logoData} orgDeet={orgData}/>}
+            {dataSaved === true && <AdminPasswordChange logo={logoData} orgDeet={orgData} />}
         </>
     )
 }

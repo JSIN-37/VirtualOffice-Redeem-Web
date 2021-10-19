@@ -4,6 +4,7 @@
 //result must be a setState function.
 
 import React, { useState, useEffect } from 'react'
+import { Input, Button } from "@chakra-ui/react"
 import styles from './autocomplete.module.css'
 
 export default function Autocomplete({ options, result }) {
@@ -58,8 +59,19 @@ export default function Autocomplete({ options, result }) {
     }
     return (
         <>
-            <input type='text' placeholder={'Type Div Name'} value={input} onChange={(e) => { userInput(e) }} onFocus={() => { setShowList(true) }} />
-            <button onClick={exitAutocomplete} >clear</button>
+            <Input
+                id="autocomplete"
+                isFullWidth
+                pr="4.5rem"
+                focusBorderColor="purple"
+                type='text'
+                placeholder={'Type Div Name'}
+                value={input}
+                onChange={(e) => { userInput(e) }}
+                onFocus={() => { setShowList(true) }}
+            />
+
+            <Button colorScheme="purple" variant="solid" m={2} onClick={exitAutocomplete} >Clear</Button>
             {showList && <SuggestionsList suggestions={filterings} setCurrent={setCurrent} close={leavingAutocomplete} />}
         </>
     )

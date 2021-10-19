@@ -18,6 +18,7 @@ export default function InputField({ type, placeholder, input, setInput }) {
         <Input
             pr="4.5rem"
             mt="1rem"
+            focusBorderColor="purple"
             type={type}
             placeholder={placeholder}
             value={input}

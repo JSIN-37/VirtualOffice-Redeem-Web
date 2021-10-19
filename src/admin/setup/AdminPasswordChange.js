@@ -69,82 +69,78 @@ export default function AdminPasswordChange({ logo, orgDeet }) {
     return (
         <>
             {!loading && (
-                <div>
-                    <Center h="100vh">
-                        <Box
-                            display="flex"
-                            flexDirection="column"
-                            alignItems="center"
-                            w="28%"
-                            boxShadow="lg"
-                            borderRadius="20px"
-                            overflow="hidden" p={10} >
-                            <Box boxSize="90px">
-                                <Image
-                                    objectFit="cover"
-                                    src="https://raw.githubusercontent.com/JSIN-37/VirtualOffice-Redeem-Web/main/src/img/logo.png"
-                                    alt="logo"
-                                    mt={2}
-                                />
-                            </Box>
-                            <Text gutterBottom variant="h4" >
-                                Change Password
-                            </Text>
+                <Center h="100vh">
+                    <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        w="28%"
+                        boxShadow="lg"
+                        borderRadius="20px"
+                        overflow="hidden" p={10} >
+                        <Box boxSize="90px">
+                            <Image
+                                objectFit="cover"
+                                src="https://raw.githubusercontent.com/JSIN-37/VirtualOffice-Redeem-Web/main/src/img/logo.png"
+                                alt="logo"
+                                mt={2}
+                            />
+                        </Box>
+                        <Text gutterBottom variant="h4" >
+                            Change Password
+                        </Text>
+                        <Input
+                            id="email-input"
+                            isFullWidth
+                            pr="4.5rem"
+                            focusBorderColor="purple"
+                            type='email'
+                            placeholder='Email'
+                            value={email}
+                            onChange={(e) => { setEmail(e.target.value) }}
+                        />
+                        <InputGroup size="md">
                             <Input
-                                id="email-input"
+                                id="password-input"
+                                isFullWidth
+                                focusBorderColor="purple"
+                                pr="4.5rem"
+                                type={show ? "text" : "password"}
+                                placeholder="Enter password"
+                                value={password}
+                                onChange={(e) => { setPassword(e.target.value) }}
+                            />
+                            <InputRightElement width="4.5rem">
+                                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                                    {show ? "Hide" : "Show"}
+                                </Button>
+                            </InputRightElement>
+                        </InputGroup>
+                        <br />
+                        <InputGroup size="md">
+                            <Input
+                                id="password-input"
                                 isFullWidth
                                 pr="4.5rem"
-                                type='email'
-                                placeholder='Email'
-                                value={email}
-                                onChange={(e) => { setEmail(e.target.value) }}
+                                focusBorderColor="purple"
+                                type={show ? "text" : "password"}
+                                placeholder='Confirm Password'
+                                value={password2}
+                                onChange={(e) => { setPassword2(e.target.value) }}
                             />
-                            <InputGroup size="md">
-                                <Input
-                                    id="password-input"
-                                    isFullWidth
-                                    pr="4.5rem"
-                                    type={show ? "text" : "password"}
-                                    placeholder="Enter password"
-                                    value={password}
-                                    onChange={(e) => { setPassword(e.target.value) }}
-                                />
-                                <InputRightElement width="4.5rem">
-                                    <Button h="1.75rem" size="sm" onClick={handleClick}>
-                                        {show ? "Hide" : "Show"}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
-                            <br />
-                            <InputGroup size="md">
-                                <Input
-                                    id="password-input"
-                                    isFullWidth
-                                    pr="4.5rem"
-                                    type={show ? "text" : "password"}
-                                    placeholder='Confirm Password'
-                                    value={password2}
-                                    onChange={(e) => { setPassword2(e.target.value) }}
-                                />
-                                <InputRightElement width="4.5rem">
-                                    <Button h="1.75rem" size="sm" onClick={handleClick}>
-                                        {show ? "Hide" : "Show"}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
+                            <InputRightElement width="4.5rem">
+                                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                                    {show ? "Hide" : "Show"}
+                                </Button>
+                            </InputRightElement>
+                        </InputGroup>
 
-                            <Button colorScheme="purple" variant="solid" m={2} onClick={submit}>Submit</Button>
-                        </Box>
-                    </Center>
-
-
-                    <input type='password' placeholder='password' value={password} onChange={(e) => { setPassword(e.target.value) }}></input>
-                    <input type='password' placeholder='confirm password' value={password2} onChange={(e) => { setPassword2(e.target.value) }}></input>
-                    <button onClick={submit}>Submit</button>
-                </div>
+                        <Button colorScheme="purple" variant="solid" m={2} onClick={submit}>Submit</Button>
+                    </Box>
+                </Center>
             )}
 
-            {loading && <LoadingScreen message='updating details...' />}
+            {loading && <LoadingScreen message='Updating Details...' />}
         </>
     )
 }

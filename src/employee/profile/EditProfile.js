@@ -92,6 +92,7 @@ export default function EditProfile() {
                 id="first-name"
                 isFullWidth
                 pr="4.5rem"
+                focusBorderColor="purple"
                 type="text"
                 placeholder="First Name"
                 value={userFirstName}
@@ -101,6 +102,7 @@ export default function EditProfile() {
                 id="last-name"
                 isFullWidth
                 pr="4.5rem"
+                focusBorderColor="purple"
                 type="text"
                 placeholder="Last Name"
                 value={userLastName} onChange={(e) => { setLname(e.target.value) }}
@@ -109,6 +111,7 @@ export default function EditProfile() {
                 id="dob"
                 isFullWidth
                 pr="4.5rem"
+                focusBorderColor="purple"
                 type="text"
                 placeholder="Date of Birth"
                 value={userDob} onChange={(e) => { setDob(e.target.value) }}
@@ -117,6 +120,7 @@ export default function EditProfile() {
                 id="gender"
                 isFullWidth
                 pr="4.5rem"
+                focusBorderColor="purple"
                 type="text"
                 placeholder="Gender"
                 value={userGender} onChange={(e) => { setGender(e.target.value) }}
@@ -125,6 +129,7 @@ export default function EditProfile() {
                 id="address"
                 isFullWidth
                 pr="4.5rem"
+                focusBorderColor="purple"
                 type="text"
                 placeholder="Address"
                 value={userAddress} onChange={(e) => { setAddr(e.target.value) }}
@@ -133,6 +138,7 @@ export default function EditProfile() {
                 id="contact-num"
                 isFullWidth
                 pr="4.5rem"
+                focusBorderColor="purple"
                 type="text"
                 placeholder="Contact Number"
                 value={userContactNumber} onChange={(e) => { setContact(e.target.value) }}
@@ -169,6 +175,7 @@ export const ChangeProfilePic = ({ setPicture, open }) => {
     return (
         <Input
             pr="4.5rem"
+            focusBorderColor="purple"
             type='file'
             name='file'
             accept="image/jpeg"

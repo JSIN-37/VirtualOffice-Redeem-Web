@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react"
 import LoadingScreen from "../../utility/LoadingScreen";
 import { getDivisions } from "../divisions/functions";
 import Autocomplete from "./../../utility/components/autocomplete/Autocomplete"
@@ -123,8 +123,8 @@ export default function CreateUser() {
         return <LoadingScreen message="creating new user..." />;
     }
 
-    const divs = divisionOptions.map((div)=>{return {id:div.id, label:div.name}})
-    const roles = roleOptions.map((role)=>{return {id:role.id, label:role.name}})
+    const divs = divisionOptions.map((div) => { return { id: div.id, label: div.name } })
+    const roles = roleOptions.map((role) => { return { id: role.id, label: role.name } })
 
     return (
         <div>
@@ -149,7 +149,7 @@ export default function CreateUser() {
                 options={roles}
                 result={selectRole}
             />
-            <button onClick={createUser}>Create</button>
+            <Button colorScheme="purple" variant="solid" m={2} onClick={createUser}>Create</Button>
         </div>
     );
 }

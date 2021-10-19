@@ -87,7 +87,7 @@ export default function InitialSetup() {
                 <div>
                     <Input
                         type='text'
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         id='organizationName'
@@ -97,7 +97,7 @@ export default function InitialSetup() {
                     />
                     <Input
                         type='text'
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         id='organizationCountry'
@@ -107,7 +107,7 @@ export default function InitialSetup() {
                     />
                     <Input
                         type='text'
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         id='organizationContactNumber'
@@ -116,7 +116,7 @@ export default function InitialSetup() {
                     />
                     <Input
                         type='text'
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         id='organizationAddress'

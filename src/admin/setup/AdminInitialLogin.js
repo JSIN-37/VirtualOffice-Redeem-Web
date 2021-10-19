@@ -51,7 +51,7 @@ export default function AdminInitialLogin({ setSignedIn }) {
                 <InputGroup size="md">
                     <Input
                         id="password-input"
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         type={show ? "text" : "password"}

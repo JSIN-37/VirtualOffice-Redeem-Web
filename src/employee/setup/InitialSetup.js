@@ -91,7 +91,7 @@ export default function InitialSetup() {
             <Text variant="h4"> Initial Setup </Text>
             <Input
                 id="first-name"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -101,7 +101,7 @@ export default function InitialSetup() {
             />
             <Input
                 id="last-name"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -111,7 +111,7 @@ export default function InitialSetup() {
             />
             <Input
                 id="dob"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -121,7 +121,7 @@ export default function InitialSetup() {
             />
             <Input
                 id="gender"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -131,7 +131,7 @@ export default function InitialSetup() {
             />
             <Input
                 id="address"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -141,7 +141,7 @@ export default function InitialSetup() {
             />
             <Input
                 id="contact-num"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'

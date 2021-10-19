@@ -90,7 +90,7 @@ export default function PasswordChange({ userDetails, userImage }) {
                 </Box>
                 <Input
                     id="old-pwd"
-                    isFullWidth
+                    w="auto"
                     pr="4.5rem"
                     focusBorderColor="purple"
                     type='password'
@@ -102,7 +102,7 @@ export default function PasswordChange({ userDetails, userImage }) {
                 <InputGroup size="md">
                     <Input
                         id="new-pwd"
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         mb="1rem"
@@ -121,7 +121,7 @@ export default function PasswordChange({ userDetails, userImage }) {
                 <InputGroup size="md">
                     <Input
                         id="confirm-pwd"
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         mb="1rem"

@@ -91,7 +91,7 @@ export default function AdminPasswordChange({ logo, orgDeet }) {
                         </Text>
                         <Input
                             id="email-input"
-                            isFullWidth
+                            w="auto"
                             pr="4.5rem"
                             focusBorderColor="purple"
                             type='email'
@@ -102,7 +102,7 @@ export default function AdminPasswordChange({ logo, orgDeet }) {
                         <InputGroup size="md">
                             <Input
                                 id="password-input"
-                                isFullWidth
+                                w="auto"
                                 focusBorderColor="purple"
                                 pr="4.5rem"
                                 type={show ? "text" : "password"}
@@ -120,7 +120,7 @@ export default function AdminPasswordChange({ logo, orgDeet }) {
                         <InputGroup size="md">
                             <Input
                                 id="password-input"
-                                isFullWidth
+                                w="auto"
                                 pr="4.5rem"
                                 focusBorderColor="purple"
                                 type={show ? "text" : "password"}

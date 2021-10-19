@@ -90,7 +90,7 @@ export default function EditProfile() {
             <Text variant="h4"> Edit profile </Text>
             <Input
                 id="first-name"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type="text"
@@ -100,7 +100,7 @@ export default function EditProfile() {
             />
             <Input
                 id="last-name"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type="text"
@@ -109,7 +109,7 @@ export default function EditProfile() {
             />
             <Input
                 id="dob"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type="text"
@@ -118,7 +118,7 @@ export default function EditProfile() {
             />
             <Input
                 id="gender"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type="text"
@@ -127,7 +127,7 @@ export default function EditProfile() {
             />
             <Input
                 id="address"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type="text"
@@ -136,7 +136,7 @@ export default function EditProfile() {
             />
             <Input
                 id="contact-num"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type="text"

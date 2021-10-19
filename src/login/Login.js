@@ -115,7 +115,7 @@ export default function Login(props) {
                 {props.employee &&
                     <Input
                         id="email-input"
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         type='email'
@@ -128,7 +128,7 @@ export default function Login(props) {
                 <InputGroup size="md">
                     <Input
                         id="password-input"
-                        isFullWidth
+                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         mb="1rem"

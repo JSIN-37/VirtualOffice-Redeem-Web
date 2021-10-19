@@ -61,7 +61,7 @@ export default function Autocomplete({ options, result }) {
         <>
             <Input
                 id="autocomplete"
-                isFullWidth
+                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'

@@ -1,8 +1,8 @@
-import { Autocomplete } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Input } from "@chakra-ui/react"
 import LoadingScreen from "../../utility/LoadingScreen";
 import { getDivisions } from "../divisions/functions";
+import Autocomplete from "./../../utility/components/autocomplete/Autocomplete"
 import InputField from "../other/InputField";
 import { getRoles } from "../roles_and_permissions/functions";
 import { createEmployee } from "./functions";

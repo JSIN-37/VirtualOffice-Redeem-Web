@@ -46,12 +46,8 @@ export default function AdminInitialLogin({ setSignedIn }) {
                         mt={2}
                     />
                 </Box>
-                <Text gutterBottom variant="h5" >
-                    Welcome back, Admin
-                </Text>
-                <Text gutterBottom variant="body1" >
-                    Enter your password to login
-                </Text>
+                <Text fontSize="lg"> Welcome Admin </Text>
+                <Text fontSize="md"> Enter your password to sign in </Text>
                 <InputGroup size="md">
                     <Input
                         id="password-input"

@@ -94,64 +94,55 @@ export default function Login(props) {
     }
 
     return (
-        <div>
-            Log in Page
-            {props.employee && <input type='text' placeholder='Username' value={email} onChange={(e) => { setEmail(e.target.value) }}></input>}
-            <input type='text' placeholder='password' value={password} onChange={(e) => { setPassword(e.target.value) }}></input>
-            <button onClick={handleLogInButton}>Login</button>
-
-            <Center h="100vh">
-                <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    w="28%"
-                    boxShadow="lg"
-                    borderRadius="20px"
-                    overflow="hidden" p={10} >
-                    <Box boxSize="90px">
-                        <Image
-                            objectFit="cover"
-                            src="https://raw.githubusercontent.com/JSIN-37/VirtualOffice-Redeem-Web/main/src/img/logo.png"
-                            alt="logo"
-                            mt={2}
-                        />
-                    </Box>
-                    <Text gutterBottom variant="h4" >
-                        Sign in
-                    </Text>
-                    {props.employee &&
-                        <Input
-                            id="email-input"
-                            isFullWidth
-                            pr="4.5rem"
-                            type='email'
-                            placeholder='Email'
-                            value={email}
-                            onChange={(e) => { setEmail(e.target.value) }}
-                        />
-                    }
-                    <br />
-                    <InputGroup size="md">
-                        <Input
-                            id="password-input"
-                            isFullWidth
-                            pr="4.5rem"
-                            mb="1rem"
-                            type={show ? "text" : "password"}
-                            placeholder="Enter password"
-                            value={password}
-                            onChange={(e) => { setPassword(e.target.value) }}
-                        />
-                        <InputRightElement width="4.5rem">
-                            <Button h="1.75rem" size="sm" onClick={handleClick}>
-                                {show ? "Hide" : "Show"}
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                    <Button colorScheme="purple" variant="solid" m={2} onClick={handleLogInButton}>Login</Button>
+        <Center h="100vh">
+            <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                w="28%"
+                boxShadow="lg"
+                borderRadius="20px"
+                overflow="hidden" p={10} >
+                <Box boxSize="90px">
+                    <Image
+                        objectFit="cover"
+                        src="https://raw.githubusercontent.com/JSIN-37/VirtualOffice-Redeem-Web/main/src/img/logo.png"
+                        alt="logo"
+                        mt={2}
+                    />
                 </Box>
-            </Center>
-        </div>
+                <Text fontSize="lg"> Sign in </Text>
+                {props.employee &&
+                    <Input
+                        id="email-input"
+                        isFullWidth
+                        pr="4.5rem"
+                        type='email'
+                        placeholder='Email'
+                        value={email}
+                        onChange={(e) => { setEmail(e.target.value) }}
+                    />
+                }
+                <br />
+                <InputGroup size="md">
+                    <Input
+                        id="password-input"
+                        isFullWidth
+                        pr="4.5rem"
+                        mb="1rem"
+                        type={show ? "text" : "password"}
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => { setPassword(e.target.value) }}
+                    />
+                    <InputRightElement width="4.5rem">
+                        <Button h="1.75rem" size="sm" onClick={handleClick}>
+                            {show ? "Hide" : "Show"}
+                        </Button>
+                    </InputRightElement>
+                </InputGroup>
+                <Button colorScheme="purple" variant="solid" m={2} onClick={handleLogInButton}>Login</Button>
+            </Box>
+        </Center>
     )
 }

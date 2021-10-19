@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react"
-import { Center, Box, Image, Text, Button } from "@chakra-ui/react"
+import { Center, Box, Image, Button } from "@chakra-ui/react"
 import { USER_STORAGE_KEY } from '../../app_data/constants'
 import { removeUserFromStorage } from '../../utility/functions'
 import LoadingScreen from '../../utility/LoadingScreen'

@@ -1,13 +1,15 @@
-import { Grid, Typography } from '@mui/material'
 import React from 'react'
+import { Center, Text, } from "@chakra-ui/react"
 
-export default function UserPermissionsView({permissions, open}) {
+export default function UserPermissionsView({ permissions, open }) {
     return (
         <div>
-            <Grid container>
-                <Typography>{JSON.stringify(permissions)}</Typography>
-            </Grid>
-            <button onClick={()=>open(false)}>close</button>
+            <Center>
+                <Text fontSize="md" m={2} gutterBottom>
+                    {JSON.stringify(permissions)}
+                </Text>
+            </Center>
+            <button onClick={() => open(false)}>close</button>
         </div>
     )
 }

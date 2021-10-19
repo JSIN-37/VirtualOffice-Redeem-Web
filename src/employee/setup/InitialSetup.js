@@ -91,7 +91,6 @@ export default function InitialSetup() {
             <Text variant="h4"> Initial Setup </Text>
             <Input
                 id="first-name"
-                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -101,7 +100,6 @@ export default function InitialSetup() {
             />
             <Input
                 id="last-name"
-                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -111,7 +109,6 @@ export default function InitialSetup() {
             />
             <Input
                 id="dob"
-                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -121,7 +118,6 @@ export default function InitialSetup() {
             />
             <Input
                 id="gender"
-                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -131,7 +127,6 @@ export default function InitialSetup() {
             />
             <Input
                 id="address"
-                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'
@@ -141,7 +136,6 @@ export default function InitialSetup() {
             />
             <Input
                 id="contact-num"
-                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'

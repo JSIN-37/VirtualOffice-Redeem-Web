@@ -61,7 +61,6 @@ export default function Autocomplete({ options, result }) {
         <>
             <Input
                 id="autocomplete"
-                w="auto"
                 pr="4.5rem"
                 focusBorderColor="purple"
                 type='text'

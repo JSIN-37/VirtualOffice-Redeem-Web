@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/react"
+import { Input, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react"
 import { Center, Box, Image, Text, Button } from "@chakra-ui/react"
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from 'axios'
 import { USER_STORAGE_KEY } from '../app_data/constants'
 import { getTokenFromStorage, setUserToStorage } from '../utility/functions'
@@ -115,7 +116,6 @@ export default function Login(props) {
                 {props.employee &&
                     <Input
                         id="email-input"
-                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         type='email'
@@ -125,11 +125,9 @@ export default function Login(props) {
                     />
                 }
                 <br />
-                <InputGroup size="md">
+                <InputGroup>
                     <Input
                         id="password-input"
-                        w="auto"
-                        pr="4.5rem"
                         focusBorderColor="purple"
                         mb="1rem"
                         type={show ? "text" : "password"}
@@ -137,11 +135,9 @@ export default function Login(props) {
                         value={password}
                         onChange={(e) => { setPassword(e.target.value) }}
                     />
-                    <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                            {show ? "Hide" : "Show"}
-                        </Button>
-                    </InputRightElement>
+                    <InputRightElement children={
+                        <IconButton h="1.75rem" size="sm" onClick={handleClick}>{show ? <FaEyeSlash /> : <FaEye />}</IconButton>
+                    } />
                 </InputGroup>
                 <Button colorScheme="purple" variant="solid" m={2} onClick={handleLogInButton}>Login</Button>
             </Box>

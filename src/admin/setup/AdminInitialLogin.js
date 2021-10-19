@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/react"
+import { Input, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react"
 import { Center, Box, Image, Text, Button } from "@chakra-ui/react"
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { setTokenToStorage } from '../../utility/functions';
 import { USER_STORAGE_KEY } from '../../app_data/constants';
 import { admin_login_url } from '../../app_data/admin_urls';
@@ -51,7 +52,6 @@ export default function AdminInitialLogin({ setSignedIn }) {
                 <InputGroup size="md">
                     <Input
                         id="password-input"
-                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         type={show ? "text" : "password"}
@@ -59,11 +59,9 @@ export default function AdminInitialLogin({ setSignedIn }) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                            {show ? "Hide" : "Show"}
-                        </Button>
-                    </InputRightElement>
+                    <InputRightElement children={
+                        <IconButton h="1.75rem" size="sm" onClick={handleClick}>{show ? <FaEyeSlash /> : <FaEye />}</IconButton>
+                    } />
                 </InputGroup>
                 <Button colorScheme="purple" variant="solid" m={2} onClick={signIn}>Login</Button>
             </Box>

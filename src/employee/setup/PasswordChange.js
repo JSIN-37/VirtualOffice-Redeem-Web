@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/react"
+import { Input, InputGroup, InputRightElement, IconButton } from "@chakra-ui/react"
 import { Center, Box, Image, Button } from "@chakra-ui/react"
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { USER_STORAGE_KEY } from '../../app_data/constants'
 import { removeUserFromStorage } from '../../utility/functions'
 import LoadingScreen from '../../utility/LoadingScreen'
@@ -90,7 +91,6 @@ export default function PasswordChange({ userDetails, userImage }) {
                 </Box>
                 <Input
                     id="old-pwd"
-                    w="auto"
                     pr="4.5rem"
                     focusBorderColor="purple"
                     type='password'
@@ -102,7 +102,6 @@ export default function PasswordChange({ userDetails, userImage }) {
                 <InputGroup size="md">
                     <Input
                         id="new-pwd"
-                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         mb="1rem"
@@ -111,17 +110,14 @@ export default function PasswordChange({ userDetails, userImage }) {
                         value={password}
                         onChange={(e) => { setPassword(e.target.value) }}
                     />
-                    <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                            {show ? "Hide" : "Show"}
-                        </Button>
-                    </InputRightElement>
+                    <InputRightElement children={
+                        <IconButton h="1.75rem" size="sm" onClick={handleClick}>{show ? <FaEyeSlash /> : <FaEye />}</IconButton>
+                    } />
                 </InputGroup>
                 <br />
                 <InputGroup size="md">
                     <Input
                         id="confirm-pwd"
-                        w="auto"
                         pr="4.5rem"
                         focusBorderColor="purple"
                         mb="1rem"
@@ -130,11 +126,9 @@ export default function PasswordChange({ userDetails, userImage }) {
                         value={password2}
                         onChange={(e) => { setPassword2(e.target.value) }}
                     />
-                    <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                            {show ? "Hide" : "Show"}
-                        </Button>
-                    </InputRightElement>
+                    <InputRightElement children={
+                        <IconButton h="1.75rem" size="sm" onClick={handleClick}>{show ? <FaEyeSlash /> : <FaEye />}</IconButton>
+                    } />
                 </InputGroup>
                 <Button colorScheme="purple" variant="solid" m={2} onClick={completeSetup}>Confirm</Button>
             </Box>
